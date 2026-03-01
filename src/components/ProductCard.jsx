@@ -5,7 +5,9 @@ import { ArrowRight } from 'lucide-react';
 const ProductCard = ({ title, description, icon, image }) => {
   return (
     <motion.div 
-      whileHover={{ y: -10 }}
+      whileHover={{ y: -15, 
+        transition: { type: "spring", stiffness: 300 }
+       }}
       className="group bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500"
     >
       {/* Image Container */}

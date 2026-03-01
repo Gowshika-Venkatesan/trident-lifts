@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import lux from '../assets/lux.png';
+import it from '../assets/it.png';
+import frigh from '../assets/frigh.png';
+import hotel from '../assets/hotel.png';
+import ware from '../assets/ware.png';
 
 const Gallery = () => {
   const [filter, setFilter] = useState('All');
@@ -7,12 +12,12 @@ const Gallery = () => {
   const categories = ['All', 'Residential', 'Commercial', 'Industrial'];
 
   const projects = [
-    { id: 1, category: 'Residential', title: 'Luxury Villa Lift', city: 'Bangalore', img: 'https://images.unsplash.com/photo-1543286386-2e659306cd6c?auto=format&fit=crop&q=80&w=800' },
-    { id: 2, category: 'Commercial', title: 'IT Park Express', city: 'Chennai', img: 'https://images.unsplash.com/photo-1517502474097-f9b30659dadb?auto=format&fit=crop&q=80&w=800' },
-    { id: 3, category: 'Industrial', title: 'Heavy Freight System', city: 'Coimbatore', img: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800' },
-    { id: 4, category: 'Residential', title: 'Glass Observation Lift', city: 'Mysore', img: 'https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?auto=format&fit=crop&q=80&w=800' },
+    { id: 1, category: 'Residential', title: 'Luxury Villa Lift', city: 'Bangalore', img: lux },
+    { id: 2, category: 'Commercial', title: 'IT Park Express', city: 'Chennai', img: it },
+    { id: 3, category: 'Industrial', title: 'Heavy Freight System', city: 'Coimbatore', img: frigh },
+    { id: 4, category: 'Residential', title: 'Glass Observation Lift', city: 'Mysore', img: hotel },
     { id: 5, category: 'Commercial', title: 'Hotel Grand Lobby', city: 'Bangalore', img: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800' },
-    { id: 6, category: 'Industrial', title: 'Warehouse Solution', city: 'Salem', img: 'https://images.unsplash.com/photo-1601053163273-030b4acdf301?auto=format&fit=crop&q=80&w=800' },
+    { id: 6, category: 'Industrial', title: 'Warehouse Solution', city: 'Salem', img: ware },
   ];
 
   const filteredProjects = filter === 'All' 

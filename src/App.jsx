@@ -1,56 +1,68 @@
-import React from 'react'
-import Navbar from './sections/Navbar'
-import EnquiryForm from './sections/EnquiryForm'
-import Products from './sections/Products'
-import Stats from './sections/Stats' 
-import FloatingContact from './components/FloatingContact'
+import React, { useState } from 'react';
+import Navbar from './sections/Navbar';
+import Hero from './sections/Hero'; 
+import EnquiryForm from './sections/EnquiryForm';
+import Products from './sections/Products';
+import Stats from './sections/Stats'; 
+import FloatingContact from './components/FloatingContact';
 import ClientLogos from './sections/ClientLogos';
-import Footer from './sections/Footer'
+import Footer from './sections/Footer';
 import ServiceExcellence from './sections/ServiceExecellence';
 import Testimonials from './sections/Testimonials';
-import Gallery from './sections/Gallery'
+import Gallery from './sections/Gallery';
+import { X } from 'lucide-react';
 
 function App() {
+  const [showForm, setShowForm] = useState(false);
+
   return (
-    /* Added overflow-hidden on main to prevent mobile horizontal scrolling */
     <main className="relative min-h-screen bg-white pb-20 overflow-x-hidden">
-      <Navbar />
+      <Navbar onQuoteClick={() => setShowForm(true)} />
       
-      {/* HERO SECTION - Updated for Mobile Padding */}
-      <section className="relative pt-32 md:pt-40 pb-16 px-6 bg-gradient-to-br from-slate-50 to-white">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-          
-          <div className="text-center lg:text-left">
-            <span className="text-[#2563eb] font-bold tracking-[0.2em] text-xs uppercase mb-4 block">
-              Elevating India's Infrastructure
-            </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 leading-tight mb-6">
-              Modern Lifts for <span className="text-[#2563eb]">Modern Living.</span>
-            </h1>
-            <p className="text-slate-600 text-base md:text-lg mb-8 max-w-xl mx-auto lg:mx-0">
-              Trident Elevating Solutions provides world-class elevator technology with a focus on safety and durability.
-            </p>
-          </div>
+      <Hero onQuoteClick={() => setShowForm(true)} />
 
-          {/* Form remains centered on mobile, right-aligned on desktop */}
-          <div className="w-full max-w-md mx-auto lg:ml-auto lg:mr-0">
-             <EnquiryForm />
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Place Stats here for trust building */}
       <Stats />
       <ClientLogos />
-      <Products />
+      <div id="products"><Products /></div>
       <ServiceExcellence />
       <Gallery />
       <Testimonials />
       <Footer />
-      
       <FloatingContact />
+
+      {/* ULTRA-COMPACT MODAL POP-UP */}
+      {showForm && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-4">
+          {/* Backdrop with heavy blur to focus on the small form */}
+          <div 
+            className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
+            onClick={() => setShowForm(false)} 
+          />
+          
+          {/* The Form Box - Forced to stay small */}
+          <div className="relative bg-white w-full max-w-[380px] rounded-xl shadow-2xl overflow-hidden animate-in zoom-in duration-200 origin-center scale-90 md:scale-100">
+            
+            {/* Small Close Button */}
+            <button 
+              onClick={() => setShowForm(false)}
+              className="absolute top-2 right-2 p-1 text-slate-400 hover:text-[#d70505] transition-colors z-[110]"
+            >
+              <X size={18} />
+            </button>
+
+            {/* Content Area - Minimal Padding */}
+            <div className="p-3">
+               {/* This wraps your form to force it to be tighter */}
+               <div className="compact-form-wrapper">
+                  <EnquiryForm />
+               </div>
+            </div>
+            
+          </div>
+        </div>
+      )}
     </main>
-  )
+  );
 }
 
-export default App
+export default App;

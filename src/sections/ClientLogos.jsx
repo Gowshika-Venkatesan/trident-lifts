@@ -2,16 +2,21 @@ import React from 'react';
 import { motion } from 'framer-motion';
 // Import your logo with a unique name
 import companyLogo from '../assets/TES.png';
+import a2b from '../assets/a2b.png';
+import thala from '../assets/thala.jpg';
+import Junior from '../assets/Junior.jpg';
+import Joy from '../assets/Joy.png';
+import zudio from '../assets/zudio.png';
 
 const ClientLogos = () => {
   // We use your company logo for all placeholders for now
   const logos = [
-    companyLogo,
-    companyLogo,
-    companyLogo,
-    companyLogo,
-    companyLogo,
-    companyLogo,
+    thala,
+    a2b,
+    Junior,
+    thala,
+    Joy,
+    zudio,
   ];
 
   return (

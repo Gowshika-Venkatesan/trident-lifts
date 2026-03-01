@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import lux from '../assets/lux.png';
-import it from '../assets/it.png';
+import lux from '../assets/Lux.png';
+import it from '../assets/It.png';
 import frigh from '../assets/frigh.png';
 import hotel from '../assets/hotel.png';
 import ware from '../assets/ware.png';

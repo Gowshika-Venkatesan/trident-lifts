@@ -7,7 +7,7 @@ import Stats from './sections/Stats';
 import FloatingContact from './components/FloatingContact';
 import ClientLogos from './sections/ClientLogos';
 import Footer from './sections/Footer';
-import ServiceExcellence from './sections/ServiceExecellence';
+import ServiceExcellence from './sections/ServiceExecellence.jsx';
 import Testimonials from './sections/Testimonials';
 import Gallery from './sections/Gallery';
 import { X } from 'lucide-react';

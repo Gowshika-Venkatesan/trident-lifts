@@ -1,48 +1,60 @@
-import React from 'react';
-import heroBg from '../assets/Lift.png'; 
+import { ArrowRight, CheckCircle2, MapPin, ShieldCheck } from 'lucide-react';
+import heroBg from '../assets/Lift.png';
 
-const Hero = ({ onQuoteClick }) => {
-  return (
-    <section className="relative min-h-screen w-full flex items-center overflow-hidden">
-      {/* Background Image Layer */}
-      <div className="absolute inset-0 z-0">
-        <img src={heroBg} alt="Lift" className="w-full h-full object-cover" />
-        {/* Adjusted gradient to be more subtle on the right edge */}
-        <div className="absolute inset-0 bg-gradient-to-l from-white/30 via-transparent to-transparent"></div>
-      </div>
+const Hero = ({ onQuoteClick }) => (
+  <section id="home" className="relative flex min-h-[760px] items-center overflow-hidden pt-28 lg:min-h-screen">
+    <div className="absolute inset-0">
+      <img src={heroBg} alt="Contemporary elevator cabin by Trident Elevating Solutions" className="h-full w-full object-cover object-center" />
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/88 to-slate-950/20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+    </div>
 
-      {/* Container: Changed 'px-6' to 'pr-4 md:pr-10' 
-          This moves the content closer to the right screen edge.
-      */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full flex justify-end px-6 pr-4 md:pr-12 lg:pr-16">
-        
-        {/* Content Box: max-w-lg keeps the lines from getting too long */}
-        <div className="max-w-xl text-right flex flex-col items-end">
-          
-          <span className="text-[#0f172a] font-bold tracking-[0.3em] text-[10px] uppercase mb-3 opacity-90">
-            Trident Elevating Solutions
-          </span>
+    <div className="relative mx-auto w-full max-w-7xl px-6 py-24">
+      <div className="max-w-3xl">
+        <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-blue-200 backdrop-blur">
+          <MapPin size={15} />
+          Bengaluru, Karnataka
+        </div>
+        <h1 className="max-w-3xl text-5xl font-black leading-[1.02] tracking-tight text-white sm:text-6xl lg:text-7xl">
+          Better lifts begin with
+          <span className="block text-blue-400">better engineering.</span>
+        </h1>
+        <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl">
+          New elevator installation, modernization and lifecycle service designed around your building, its people and Bengaluru&apos;s demands.
+        </p>
 
-          <h1 className="text-3xl md:text-5xl lg:text-5xl font-extrabold text-[#0f172a] leading-tight mb-5">
-            Elevating Excellence <br />
-            <span className="text-[#2563eb]">in Lift Solutions.</span>
-          </h1>
-
-          <p className="text-slate-600 text-[10px] md:text-xs font-semibold mb-8 tracking-[0.2em] uppercase opacity-80">
-            Installation • Maintenance • Modernization
-          </p>
-
-          <button 
+        <div className="mt-9 flex flex-col gap-4 sm:flex-row">
+          <button
+            type="button"
             onClick={onQuoteClick}
-            className="bg-[#0f172a] text-white px-10 py-3.5 rounded-sm font-bold text-sm hover:bg-[#2563eb] hover:scale-105 transition-all shadow-xl uppercase tracking-widest active:scale-95"
+            className="group inline-flex items-center justify-center gap-3 rounded-full bg-blue-600 px-7 py-4 text-sm font-extrabold uppercase tracking-wider text-white shadow-2xl shadow-blue-950/40 transition hover:bg-blue-500"
           >
-            Get a Free Quote
+            Plan your lift
+            <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
           </button>
-          
+          <a
+            href="#solutions"
+            className="inline-flex items-center justify-center rounded-full border border-white/40 bg-white/10 px-7 py-4 text-sm font-extrabold uppercase tracking-wider text-white backdrop-blur transition hover:bg-white hover:text-slate-950"
+          >
+            Explore solutions
+          </a>
+        </div>
+
+        <div className="mt-12 grid max-w-2xl gap-4 border-t border-white/20 pt-7 sm:grid-cols-3">
+          {[
+            [<ShieldCheck size={19} />, 'Safety-led planning'],
+            [<CheckCircle2 size={19} />, 'Tailored specifications'],
+            [<CheckCircle2 size={19} />, 'Lifecycle support'],
+          ].map(([icon, label]) => (
+            <div key={label} className="flex items-center gap-3 text-sm font-semibold text-slate-200">
+              <span className="shrink-0 text-blue-400">{icon}</span>
+              {label}
+            </div>
+          ))}
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default Hero;

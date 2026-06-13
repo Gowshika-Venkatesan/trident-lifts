@@ -1,63 +1,62 @@
-import React, { useState } from 'react';
-import Navbar from './sections/Navbar';
-import Hero from './sections/Hero'; 
-import EnquiryForm from './sections/EnquiryForm';
-import Products from './sections/Products';
-import Stats from './sections/Stats'; 
-import FloatingContact from './components/FloatingContact';
-import ClientLogos from './sections/ClientLogos';
-import Footer from './sections/Footer';
-import ServiceExcellence from './sections/ServiceExecellence.jsx';
-import Testimonials from './sections/Testimonials';
-import Gallery from './sections/Gallery';
+import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
+import Navbar from './sections/Navbar';
+import Hero from './sections/Hero';
+import About from './sections/About';
+import Products from './sections/Products';
+import ServiceExcellence from './sections/ServiceExecellence';
+import Process from './sections/Process';
+import Gallery from './sections/Gallery';
+import Faq from './sections/Faq';
+import EnquiryForm from './sections/EnquiryForm';
+import Footer from './sections/Footer';
+import FloatingContact from './components/FloatingContact';
 
 function App() {
   const [showForm, setShowForm] = useState(false);
 
+  useEffect(() => {
+    document.body.style.overflow = showForm ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showForm]);
+
+  const openQuote = () => setShowForm(true);
+
   return (
-    <main className="relative min-h-screen bg-white pb-20 overflow-x-hidden">
-      <Navbar onQuoteClick={() => setShowForm(true)} />
-      
-      <Hero onQuoteClick={() => setShowForm(true)} />
-
-      <Stats />
-      <ClientLogos />
-      <div id="products"><Products /></div>
-      <ServiceExcellence />
+    <main className="min-h-screen overflow-x-hidden bg-white text-slate-950">
+      <Navbar onQuoteClick={openQuote} />
+      <Hero onQuoteClick={openQuote} />
+      <About onQuoteClick={openQuote} />
+      <Products onQuoteClick={openQuote} />
+      <ServiceExcellence onQuoteClick={openQuote} />
+      <Process onQuoteClick={openQuote} />
       <Gallery />
-      <Testimonials />
-      <Footer />
-      <FloatingContact />
+      <Faq />
+      <Footer onQuoteClick={openQuote} />
+      <FloatingContact onQuoteClick={openQuote} />
 
-      {/* ULTRA-COMPACT MODAL POP-UP */}
       {showForm && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-4">
-          {/* Backdrop with heavy blur to focus on the small form */}
-          <div 
-            className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
-            onClick={() => setShowForm(false)} 
-          />
-          
-          {/* The Form Box - Forced to stay small */}
-          <div className="relative bg-white w-full max-w-[380px] rounded-xl shadow-2xl overflow-hidden animate-in zoom-in duration-200 origin-center scale-90 md:scale-100">
-            
-            {/* Small Close Button */}
-            <button 
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="quote-title"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setShowForm(false);
+          }}
+        >
+          <div className="relative max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white shadow-2xl">
+            <button
+              type="button"
               onClick={() => setShowForm(false)}
-              className="absolute top-2 right-2 p-1 text-slate-400 hover:text-[#d70505] transition-colors z-[110]"
+              className="absolute right-4 top-4 z-10 rounded-full bg-slate-100 p-2 text-slate-600 transition hover:bg-slate-200 hover:text-slate-950"
+              aria-label="Close enquiry form"
             >
-              <X size={18} />
+              <X size={20} />
             </button>
-
-            {/* Content Area - Minimal Padding */}
-            <div className="p-3">
-               {/* This wraps your form to force it to be tighter */}
-               <div className="compact-form-wrapper">
-                  <EnquiryForm />
-               </div>
-            </div>
-            
+            <EnquiryForm onSuccess={() => setTimeout(() => setShowForm(false), 1800)} />
           </div>
         </div>
       )}

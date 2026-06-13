@@ -1,80 +1,59 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ShieldCheck, Headphones, Zap, PenTool } from 'lucide-react';
+import { ArrowRight, ClipboardCheck, RefreshCw, Settings, Siren } from 'lucide-react';
 
-const ServiceExcellence = () => {
-  const services = [
-    {
-      title: "24/7 Rapid Response",
-      desc: "Our dedicated technical team is on standby 24/7 to ensure zero downtime for your elevators.",
-      icon: <Headphones size={32} />
-    },
-    {
-      title: "Safety Certified",
-      desc: "Every installation undergoes a 50-point safety check to meet international vertical transit standards.",
-      icon: <ShieldCheck size={32} />
-    },
-    {
-      title: "Modernization",
-      desc: "Upgrade your old lifts with our latest gearless technology for smoother and faster travel.",
-      icon: <Zap size={32} />
-    },
-    {
-      title: "Expert AMC",
-      desc: "Comprehensive Annual Maintenance Contracts tailored to keep your systems at peak performance.",
-      icon: <PenTool size={32} />
-    }
-  ];
+const services = [
+  {
+    icon: <ClipboardCheck size={30} />,
+    title: 'New Installation',
+    text: 'Site assessment, technical selection, design coordination, installation planning and handover.',
+  },
+  {
+    icon: <Settings size={30} />,
+    title: 'Preventive Maintenance',
+    text: 'Planned inspections and maintenance intended to support safety, reliability and equipment life.',
+  },
+  {
+    icon: <Siren size={30} />,
+    title: 'Breakdown Support',
+    text: 'A clear service channel for fault reporting, response coordination and corrective work.',
+  },
+  {
+    icon: <RefreshCw size={30} />,
+    title: 'Modernization',
+    text: 'Assessment-led upgrades for ageing controls, drives, fixtures, doors, cabins and safety systems.',
+  },
+];
 
-  return (
-    <section className="py-24 px-6 bg-slate-900 text-white overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          
-          {/* Left Side: Content */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <span className="text-[#2563eb] font-bold uppercase tracking-widest text-sm">Service Excellence</span>
-            <h2 className="text-4xl md:text-5xl font-black mt-4 mb-6 leading-tight">
-              Safety and Reliability <br />
-              <span className="text-slate-400">In Every Floor.</span>
-            </h2>
-            <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-              At Trident Elevating Solutions, we believe that an elevator is only as good as the service behind it. Our engineering team ensures your peace of mind with world-class maintenance.
-            </p>
-            <button className="border-2 border-[#2563eb] text-white px-8 py-3 rounded-full font-bold hover:bg-[#2563eb] transition-all">
-              Learn About AMC
-            </button>
-          </motion.div>
+const ServiceExcellence = ({ onQuoteClick }) => (
+  <section id="services" className="relative overflow-hidden bg-slate-950 px-6 py-24 text-white sm:py-28">
+    <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-blue-700/20 blur-3xl" />
+    <div className="relative mx-auto max-w-7xl">
+      <div className="grid gap-14 lg:grid-cols-[.85fr_1.15fr] lg:items-start">
+        <div className="lg:sticky lg:top-36">
+          <span className="eyebrow text-blue-400">Lifecycle Services</span>
+          <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight sm:text-5xl">
+            Service should be designed in,
+            <span className="block text-slate-400">not added later.</span>
+          </h2>
+          <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
+            Trident brings installation, maintenance and modernization into one clear service journey, with the scope shaped around your building and equipment.
+          </p>
+          <button type="button" onClick={onQuoteClick} className="mt-8 inline-flex items-center gap-3 rounded-full bg-blue-600 px-6 py-3.5 text-sm font-extrabold uppercase tracking-wider transition hover:bg-blue-500">
+            Request service consultation <ArrowRight size={18} />
+          </button>
+        </div>
 
-          {/* Right Side: Service Grid */}
-          <div className="grid sm:grid-cols-2 gap-6">
-            {services.map((service, index) => (
-              <motion.div 
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="p-8 bg-white/5 border border-white/10 rounded-2xl hover:border-[#2563eb]/50 transition-all group"
-              >
-                <div className="text-[#2563eb] mb-4 group-hover:scale-110 transition-transform">
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">
-                  {service.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+        <div className="grid gap-5 sm:grid-cols-2">
+          {services.map(({ icon, title, text }, index) => (
+            <article key={title} className={`rounded-3xl border p-7 sm:p-8 ${index === 0 ? 'border-blue-500 bg-blue-600' : 'border-white/10 bg-white/[0.04]'}`}>
+              <span className={index === 0 ? 'text-white' : 'text-blue-400'}>{icon}</span>
+              <h3 className="mt-7 text-2xl font-black">{title}</h3>
+              <p className={`mt-3 leading-7 ${index === 0 ? 'text-blue-50' : 'text-slate-400'}`}>{text}</p>
+            </article>
+          ))}
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default ServiceExcellence;

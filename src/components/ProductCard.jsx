@@ -1,43 +1,23 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
-const ProductCard = ({ title, description, icon, image }) => {
-  return (
-    <motion.div 
-      whileHover={{ y: -15, 
-        transition: { type: "spring", stiffness: 300 }
-       }}
-      className="group bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500"
-    >
-      {/* Image Container */}
-      <div className="h-56 overflow-hidden relative">
-        <img 
-          src={image} 
-          alt={title} 
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+const ProductCard = ({ title, description, detail, icon, image, onEnquire }) => (
+  <article className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-2xl">
+    <div className="relative h-60 overflow-hidden">
+      <img src={image} alt={title} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 to-transparent" />
+      <div className="absolute bottom-5 left-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-blue-700 shadow-lg">
+        {icon}
       </div>
-
-      <div className="p-8">
-        <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-6 text-[#2563eb] group-hover:bg-[#2563eb] group-hover:text-white transition-colors duration-300">
-          {icon}
-        </div>
-        
-        <h3 className="text-xl font-extrabold text-slate-900 mb-3 group-hover:text-[#2563eb] transition-colors">
-          {title}
-        </h3>
-        <p className="text-slate-500 text-sm leading-relaxed mb-6">
-          {description}
-        </p>
-        
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#2563eb]">
-          Learn More <ArrowRight size={14} />
-        </div>
-      </div>
-    </motion.div>
-  );
-};
+    </div>
+    <div className="p-7">
+      <h3 className="text-2xl font-black text-slate-950">{title}</h3>
+      <p className="mt-3 leading-7 text-slate-600">{description}</p>
+      <p className="mt-4 border-l-2 border-blue-600 pl-4 text-sm leading-6 text-slate-500">{detail}</p>
+      <button type="button" onClick={onEnquire} className="mt-6 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700 hover:text-slate-950">
+        Ask about this solution <ArrowUpRight size={17} />
+      </button>
+    </div>
+  </article>
+);
 
 export default ProductCard;

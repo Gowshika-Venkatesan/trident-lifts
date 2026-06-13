@@ -1,77 +1,130 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { CheckCircle2, LoaderCircle } from 'lucide-react';
 
-const EnquiryForm = () => {
+const initialForm = {
+  name: '',
+  phone: '',
+  email: '',
+  city: 'Bengaluru',
+  service: 'New elevator installation',
+  buildingType: 'Residential apartment',
+  floors: '',
+  message: '',
+};
+
+const EnquiryForm = ({ onSuccess }) => {
+  const [form, setForm] = useState(initialForm);
+  const [status, setStatus] = useState('idle');
+  const [error, setError] = useState('');
+
+  const updateField = (event) => {
+    const { name, value } = event.target;
+    setForm((current) => ({ ...current, [name]: value }));
+  };
+
+  const submitForm = async (event) => {
+    event.preventDefault();
+    setStatus('loading');
+    setError('');
+
+    const endpoint = import.meta.env.VITE_FORM_ENDPOINT;
+    if (!endpoint) {
+      setStatus('error');
+      setError('The enquiry inbox is being connected. Please use the contact details that will be published before launch.');
+      return;
+    }
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, source: 'Trident website' }),
+      });
+      if (!response.ok) throw new Error('Submission failed');
+      setStatus('success');
+      setForm(initialForm);
+      onSuccess?.();
+    } catch {
+      setStatus('error');
+      setError('We could not send your request. Please try again shortly.');
+    }
+  };
+
+  if (status === 'success') {
+    return (
+      <div className="flex min-h-[420px] flex-col items-center justify-center p-10 text-center">
+        <CheckCircle2 size={58} className="text-emerald-600" />
+        <h2 id="quote-title" className="mt-6 text-3xl font-black">Request received</h2>
+        <p className="mt-3 text-slate-600">Thank you. The Trident team will review your requirements and contact you.</p>
+      </div>
+    );
+  }
+
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="w-full bg-white"
-    >
-      <form className="space-y-3">
-        {/* Name Field */}
-        <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 ml-1">
-            Full Name
-          </label>
-          <input 
-            type="text" 
-            placeholder="Your Name" 
-            className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-md focus:border-[#d70505] outline-none transition text-sm text-slate-900"
-            required
-          />
-        </div>
-        
-        {/* Phone Field */}
-        <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 ml-1">
-            Phone Number
-          </label>
-          <input 
-            type="tel" 
-            placeholder="+91 XXXXX XXXXX" 
-            className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-md focus:border-[#d70505] outline-none transition text-sm text-slate-900"
-            required
-          />
-        </div>
+    <div className="p-6 sm:p-9">
+      <span className="eyebrow">Project Enquiry</span>
+      <h2 id="quote-title" className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">Tell us about your lift requirement.</h2>
+      <p className="mt-3 max-w-xl leading-7 text-slate-600">A few project details help us prepare for a useful first conversation.</p>
 
-        {/* Service Field */}
-        <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 ml-1">
-            Service
-          </label>
-          <select className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-md focus:border-[#d70505] outline-none transition text-sm text-slate-700 cursor-pointer">
-            <option>New Installation</option>
+      <form onSubmit={submitForm} className="mt-8 grid gap-5 sm:grid-cols-2">
+        <label className="field-label">
+          Full name *
+          <input className="field-input" name="name" value={form.name} onChange={updateField} autoComplete="name" required />
+        </label>
+        <label className="field-label">
+          Phone number *
+          <input className="field-input" type="tel" name="phone" value={form.phone} onChange={updateField} autoComplete="tel" pattern="[0-9+\-\s()]{8,18}" required />
+        </label>
+        <label className="field-label">
+          Email
+          <input className="field-input" type="email" name="email" value={form.email} onChange={updateField} autoComplete="email" />
+        </label>
+        <label className="field-label">
+          Project city *
+          <input className="field-input" name="city" value={form.city} onChange={updateField} autoComplete="address-level2" required />
+        </label>
+        <label className="field-label">
+          Requirement *
+          <select className="field-input" name="service" value={form.service} onChange={updateField}>
+            <option>New elevator installation</option>
+            <option>Home elevator</option>
+            <option>Maintenance / AMC</option>
+            <option>Repair support</option>
             <option>Modernization</option>
-            <option>Maintenance (AMC)</option>
-            <option>Repair Services</option>
           </select>
-        </div>
+        </label>
+        <label className="field-label">
+          Building type *
+          <select className="field-input" name="buildingType" value={form.buildingType} onChange={updateField}>
+            <option>Residential apartment</option>
+            <option>Villa / individual home</option>
+            <option>Commercial / office</option>
+            <option>Hospital / healthcare</option>
+            <option>Hotel / hospitality</option>
+            <option>Factory / warehouse</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label className="field-label">
+          Floors / stops
+          <input className="field-input" name="floors" value={form.floors} onChange={updateField} placeholder="Example: G+4" />
+        </label>
+        <label className="field-label sm:col-span-2">
+          Additional details
+          <textarea className="field-input min-h-28 resize-y" name="message" value={form.message} onChange={updateField} placeholder="Shaft size, capacity, project stage or preferred timeline" />
+        </label>
 
-        {/* Requirements - Made much smaller */}
-        <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 ml-1">
-            Message
-          </label>
-          <textarea 
-            placeholder="Brief requirements..." 
-            className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-md h-20 focus:border-[#d70505] outline-none transition text-sm text-slate-900 resize-none"
-          ></textarea>
+        {error && <p className="rounded-xl bg-amber-50 p-4 text-sm font-semibold leading-6 text-amber-800 sm:col-span-2">{error}</p>}
+
+        <div className="sm:col-span-2">
+          <button type="submit" disabled={status === 'loading'} className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 py-4 text-sm font-extrabold uppercase tracking-wider text-white transition hover:bg-slate-950 disabled:cursor-wait disabled:opacity-70">
+            {status === 'loading' && <LoaderCircle size={18} className="animate-spin" />}
+            Send project request
+          </button>
+          <p className="mt-3 text-center text-xs leading-5 text-slate-500">By submitting, you agree to be contacted about this enquiry.</p>
         </div>
-        
-        {/* Submit Button - Now uses your Red theme */}
-        <button 
-          type="submit" 
-          className="w-full bg-[#0f172a] hover:bg-[#2563eb] text-white font-bold py-3 rounded-md transition-all shadow-md active:scale-95 text-xs tracking-widest uppercase"
-        >
-          Submit Request
-        </button>
       </form>
-
-      <p className="text-[9px] text-center text-slate-400 mt-3 uppercase tracking-tighter">
-        🔒 Professional consultation within 24 hours
-      </p>
-    </motion.div>
+    </div>
   );
 };
 

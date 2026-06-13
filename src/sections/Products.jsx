@@ -1,97 +1,77 @@
-import React from 'react';
+import { Accessibility, Building2, Factory, HeartPulse, Home, Users } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
-import { 
-  Users, Home, Building2, Factory, 
-  Accessibility, Building, PackageSearch, View, Box 
-} from 'lucide-react';
 import passengerImg from '../assets/premium_lift.png';
 import homeImg from '../assets/home_lift.png';
-import hospitalImg from '../assets/hospital_lift.png'; 
+import hospitalImg from '../assets/hospital_lift.png';
 import freightImg from '../assets/goods_lift.png';
-import { image, p, pre } from 'framer-motion/client';
+import observationImg from '../assets/Lux.png';
+import commercialImg from '../assets/It.png';
 
+const liftTypes = [
+  {
+    title: 'Passenger Elevators',
+    description: 'Comfortable, efficient mobility for apartments, offices, hotels and mixed-use buildings.',
+    detail: 'Configured around traffic, capacity, travel and interior requirements.',
+    icon: <Users size={24} />,
+    image: passengerImg,
+  },
+  {
+    title: 'Home Elevators',
+    description: 'Compact, elegant lift solutions for villas, bungalows and existing residences.',
+    detail: 'Options can be assessed for space, civil work, access and desired finishes.',
+    icon: <Home size={24} />,
+    image: homeImg,
+  },
+  {
+    title: 'Hospital Elevators',
+    description: 'Purpose-planned movement for patients, stretchers, attendants and medical teams.',
+    detail: 'Door width, cabin dimensions, levelling and operational flow are carefully considered.',
+    icon: <HeartPulse size={24} />,
+    image: hospitalImg,
+  },
+  {
+    title: 'Goods & Freight Lifts',
+    description: 'Robust vertical transport for factories, warehouses, kitchens and commercial operations.',
+    detail: 'Designed around load, loading method, duty cycle and site conditions.',
+    icon: <Factory size={24} />,
+    image: freightImg,
+  },
+  {
+    title: 'Observation Elevators',
+    description: 'Panoramic elevator concepts that turn vertical movement into an architectural feature.',
+    detail: 'Glass, structure, lighting and finishes coordinated with the building design.',
+    icon: <Building2 size={24} />,
+    image: observationImg,
+  },
+  {
+    title: 'Accessibility Solutions',
+    description: 'Practical mobility solutions for elderly users, wheelchair users and inclusive buildings.',
+    detail: 'A site assessment helps determine the most appropriate platform or lift configuration.',
+    icon: <Accessibility size={24} />,
+    image: commercialImg,
+  },
+];
 
-
-const Products = () => {
-  // AI-Generated Product Descriptions & Niche Categories
-  const liftTypes = [
-    // --- Original 4 Products ---
-    {
-      title: "Passenger Lifts",
-      description: "Smart, high-speed vertical transit solutions for luxury apartments and high-rise commercial complexes.",
-      icon: <Users size={24} />,
-      image: passengerImg
-    },
-    {
-      title: "Home Elevators",
-      description: "Ultra-quiet, pit-less elevator technology designed specifically for private residences and villas.",
-      icon: <Home size={24} />,
-      image: homeImg
-    },
-    {
-      title: "Hospital Lifts",
-      description: "Engineered for precise floor leveling and spacious cabins to accommodate stretchers and medical equipment.",
-      icon: <Building2 size={24} />,
-      image: hospitalImg
-    },
-    {
-      title: "Freight & Goods Lifts",
-      description: "Robust, heavy-duty engineering built to transport industrial loads with maximum safety and efficiency.",
-      icon: <Factory size={24} />,
-      image: freightImg
-    },
-
-    
-    {
-      title: "Observation Lifts",
-      description: "Architectural masterpieces featuring glass cabins, offering panoramic views while enhancing building aesthetics.",
-      icon: <View size={24} />,
-      image: passengerImg
-    },
-    {
-      title: "Stair Lifts & Platform Lifts",
-      description: "Specialized accessibility solutions for multi-story buildings, ensuring inclusive mobility for all occupants.",
-      icon: <Accessibility size={24} />,
-      image: homeImg
-    },
-    {
-      title: "Dumbwaiters & Service Lifts",
-      description: "Efficient, compact vertical transportation for moving small loads, documents, or food in commercial and hospitality environments.",
-      icon: <Box size={24} />,
-      image: passengerImg
-    },
-    {
-      title: "Car Elevators",
-      description: "Automated vehicle parking and retrieval systems, optimized for space-efficient urban development.",
-      icon: <PackageSearch size={24} />,
-      image: homeImg
-    },
-    {
-      title: "High-Rise Commercial Lifts",
-      description: "Utilizing advanced AI-driven dispatch algorithms and high-speed tech for maximum efficiency in landmark towers.",
-      icon: <Building size={24} />,
-      image: hospitalImg
-    }
-  ];
-
-  return (
-    <section className="py-24 px-6 bg-slate-50">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <span className="text-[#2563eb] font-bold uppercase tracking-[0.3em] text-xs">Our Product Line</span>
-          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mt-3">World-Class Solutions</h2>
-          <div className="w-20 h-1.5 bg-[#2563eb] mx-auto mt-6 rounded-full" />
+const Products = ({ onQuoteClick }) => (
+  <section id="solutions" className="bg-slate-50 px-6 py-24 sm:py-28">
+    <div className="mx-auto max-w-7xl">
+      <div className="flex flex-col justify-between gap-7 md:flex-row md:items-end">
+        <div>
+          <span className="eyebrow">Elevator Solutions</span>
+          <h2 className="section-title mt-4 max-w-3xl">The right lift for every kind of movement.</h2>
         </div>
-
-        {/* Updated Grid for More Items */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {liftTypes.map((lift, index) => (
-            <ProductCard key={index} {...lift} />
-          ))}
-        </div>
+        <p className="max-w-md leading-7 text-slate-600">
+          Each solution begins with a technical discussion. Final specifications depend on your building, applicable requirements and site survey.
+        </p>
       </div>
-    </section>
-  );
-};
+
+      <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+        {liftTypes.map((lift) => (
+          <ProductCard key={lift.title} {...lift} onEnquire={onQuoteClick} />
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
 export default Products;

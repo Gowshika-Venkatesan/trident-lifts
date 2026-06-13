@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Banknote,
   CalendarCheck,
+  CalendarDays,
   ChevronRight,
   CircleAlert,
   Clock3,
@@ -45,6 +46,31 @@ const blankEmployee = {
 
 const today = new Date().toISOString().slice(0, 10);
 const currentMonth = today.slice(0, 7);
+const attendanceStatuses = [
+  { value: 'present', label: 'Present', short: 'P', color: 'bg-emerald-100 text-emerald-700' },
+  { value: 'leave', label: 'Leave', short: 'L', color: 'bg-amber-100 text-amber-700' },
+  { value: 'half_day', label: 'Half Day', short: 'HD', color: 'bg-violet-100 text-violet-700' },
+  { value: 'absent', label: 'Absent', short: 'A', color: 'bg-red-100 text-red-700' },
+  { value: 'holiday', label: 'Holiday', short: 'H', color: 'bg-blue-100 text-blue-700' },
+];
+
+const attendanceMeta = Object.fromEntries(attendanceStatuses.map((status) => [status.value, status]));
+
+const getMonthDays = (month) => {
+  const [year, monthNumber] = month.split('-').map(Number);
+  const totalDays = new Date(year, monthNumber, 0).getDate();
+  return Array.from({ length: totalDays }, (_, index) => {
+    const day = index + 1;
+    const date = `${month}-${String(day).padStart(2, '0')}`;
+    const localDate = new Date(year, monthNumber - 1, day);
+    return {
+      day,
+      date,
+      weekday: localDate.toLocaleDateString('en-IN', { weekday: 'short' }),
+      isSunday: localDate.getDay() === 0,
+    };
+  });
+};
 
 const money = (value) =>
   new Intl.NumberFormat('en-IN', {
@@ -164,6 +190,9 @@ function AdminPage() {
   const [showEmployeeForm, setShowEmployeeForm] = useState(false);
   const [employeeForm, setEmployeeForm] = useState(blankEmployee);
   const [attendanceDate, setAttendanceDate] = useState(today);
+  const [attendanceDraft, setAttendanceDraft] = useState({});
+  const [attendanceMonth, setAttendanceMonth] = useState(currentMonth);
+  const [attendanceView, setAttendanceView] = useState('daily');
   const [advanceForm, setAdvanceForm] = useState({ employee_id: '', amount: '', advance_date: today, reason: '' });
   const [payrollMonth, setPayrollMonth] = useState(currentMonth);
 
@@ -211,6 +240,16 @@ function AdminPage() {
     [attendance, attendanceDate],
   );
 
+  const monthDays = useMemo(() => getMonthDays(attendanceMonth), [attendanceMonth]);
+  const monthlyAttendanceMap = useMemo(
+    () => new Map(
+      attendance
+        .filter((entry) => entry.attendance_date.startsWith(attendanceMonth))
+        .map((entry) => [`${entry.employee_id}:${entry.attendance_date}`, entry]),
+    ),
+    [attendance, attendanceMonth],
+  );
+
   const payrollRows = useMemo(() => {
     return activeEmployees.map((employee) => {
       const approvedAdvance = advances
@@ -219,11 +258,13 @@ function AdminPage() {
       const employeeAttendance = attendance.filter((entry) => entry.employee_id === employee.id && entry.attendance_date.startsWith(payrollMonth));
       const presentDays = employeeAttendance.filter((entry) => entry.status === 'present').length;
       const leaveDays = employeeAttendance.filter((entry) => entry.status === 'leave').length;
+      const halfDays = employeeAttendance.filter((entry) => entry.status === 'half_day').length;
       return {
         ...employee,
         approvedAdvance,
         presentDays,
         leaveDays,
+        halfDays,
         netSalary: Math.max(Number(employee.monthly_salary || 0) - approvedAdvance, 0),
       };
     });
@@ -264,20 +305,36 @@ function AdminPage() {
     else loadData();
   };
 
-  const markAttendance = async (employeeId, status) => {
-    const existing = attendanceForDate.get(employeeId);
-    const payload = {
-      employee_id: employeeId,
-      attendance_date: attendanceDate,
-      status,
-      check_in: status === 'present' ? new Date().toTimeString().slice(0, 5) : null,
-    };
-    const query = existing
-      ? supabase.from('attendance').update(payload).eq('id', existing.id)
-      : supabase.from('attendance').insert(payload);
-    const { error: attendanceError } = await query;
+  const saveAttendance = async () => {
+    const records = activeEmployees
+      .map((employee) => ({
+        employee,
+        status: attendanceDraft[employee.id] ?? attendanceForDate.get(employee.id)?.status ?? '',
+      }))
+      .filter(({ status }) => status)
+      .map(({ employee, status }) => ({
+        employee_id: employee.id,
+        attendance_date: attendanceDate,
+        status,
+        check_in: status === 'present' ? attendanceForDate.get(employee.id)?.check_in || new Date().toTimeString().slice(0, 5) : null,
+      }));
+
+    if (!records.length) {
+      setError('Select an attendance status for at least one employee.');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    const { error: attendanceError } = await supabase
+      .from('attendance')
+      .upsert(records, { onConflict: 'employee_id,attendance_date' });
+    setLoading(false);
     if (attendanceError) setError(attendanceError.message);
-    else loadData();
+    else {
+      setAttendanceDraft({});
+      loadData();
+    }
   };
 
   const addAdvance = async (event) => {
@@ -390,30 +447,133 @@ function AdminPage() {
 
     if (activeTab === 'attendance') {
       return (
-        <section className="admin-panel">
-          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-            <div><h2 className="admin-title">Daily attendance</h2><p className="mt-1 text-sm text-slate-500">Mark each active employee for the selected date.</p></div>
-            <input type="date" value={attendanceDate} onChange={(event) => setAttendanceDate(event.target.value)} className="rounded-xl border border-slate-200 px-4 py-3 font-bold outline-none focus:border-[#1167b1]" />
-          </div>
-          <div className="mt-7 grid gap-4 md:grid-cols-2">
-            {activeEmployees.map((employee) => {
-              const record = attendanceForDate.get(employee.id);
-              return (
-                <article key={employee.id} className="rounded-2xl border border-slate-200 p-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <div><p className="font-bold">{employee.full_name}</p><p className="text-sm text-slate-500">{employee.designation}</p></div>
-                    {record && <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold capitalize text-[#1167b1]">{record.status}</span>}
-                  </div>
-                  <div className="mt-5 grid grid-cols-3 gap-2">
-                    {['present', 'absent', 'leave'].map((status) => (
-                      <button type="button" key={status} onClick={() => markAttendance(employee.id, status)} className={`rounded-xl px-3 py-2 text-xs font-extrabold capitalize transition ${record?.status === status ? 'bg-[#1167b1] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>{status}</button>
-                    ))}
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </section>
+        <div className="space-y-7">
+          <section className="admin-panel">
+            <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
+              <div>
+                <h2 className="admin-title">Attendance register</h2>
+                <p className="mt-1 text-sm text-slate-500">Record daily attendance or review the complete monthly register.</p>
+              </div>
+              <div className="inline-flex self-start rounded-xl bg-slate-100 p-1">
+                <button type="button" onClick={() => setAttendanceView('daily')} className={`flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-extrabold transition ${attendanceView === 'daily' ? 'bg-white text-[#1167b1] shadow-sm' : 'text-slate-500'}`}>
+                  <CalendarCheck size={17} /> Daily entry
+                </button>
+                <button type="button" onClick={() => setAttendanceView('monthly')} className={`flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-extrabold transition ${attendanceView === 'monthly' ? 'bg-white text-[#1167b1] shadow-sm' : 'text-slate-500'}`}>
+                  <CalendarDays size={17} /> Monthly register
+                </button>
+              </div>
+            </div>
+          </section>
+
+          {attendanceView === 'daily' ? (
+            <section className="admin-panel">
+              <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+                <div>
+                  <h3 className="text-lg font-black">Daily attendance</h3>
+                  <p className="mt-1 text-sm text-slate-500">Choose one status for each employee, then save the register.</p>
+                </div>
+                <input
+                  type="date"
+                  value={attendanceDate}
+                  onChange={(event) => {
+                    setAttendanceDate(event.target.value);
+                    setAttendanceDraft({});
+                  }}
+                  className="rounded-xl border border-slate-200 px-4 py-3 font-bold outline-none focus:border-[#1167b1]"
+                />
+              </div>
+
+              <div className="mt-6 overflow-x-auto">
+                <table className="admin-table min-w-[680px]">
+                  <thead><tr><th>Employee</th><th>Department</th><th>Attendance status</th><th>Saved status</th></tr></thead>
+                  <tbody>
+                    {activeEmployees.map((employee) => {
+                      const savedRecord = attendanceForDate.get(employee.id);
+                      const draftStatus = attendanceDraft[employee.id] ?? savedRecord?.status ?? '';
+                      const savedMeta = savedRecord ? attendanceMeta[savedRecord.status] : null;
+                      return (
+                        <tr key={employee.id}>
+                          <td><p className="font-bold text-slate-900">{employee.full_name}</p><p className="text-xs text-slate-500">{employee.employee_code}</p></td>
+                          <td>{employee.department || employee.designation || '-'}</td>
+                          <td>
+                            <select
+                              value={draftStatus}
+                              onChange={(event) => setAttendanceDraft((current) => ({ ...current, [employee.id]: event.target.value }))}
+                              className="w-full max-w-[210px] rounded-xl border border-slate-200 bg-white px-4 py-2.5 font-bold text-slate-700 outline-none focus:border-[#1167b1]"
+                            >
+                              <option value="">Select status</option>
+                              {attendanceStatuses.map((status) => <option key={status.value} value={status.value}>{status.label}</option>)}
+                            </select>
+                          </td>
+                          <td>{savedMeta ? <span className={`inline-flex rounded-full px-3 py-1 text-xs font-extrabold ${savedMeta.color}`}>{savedMeta.label}</span> : <span className="text-xs font-semibold text-slate-400">Not saved</span>}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="mt-6 flex flex-col justify-between gap-4 border-t border-slate-100 pt-6 sm:flex-row sm:items-center">
+                <p className="text-sm text-slate-500">
+                  {activeEmployees.filter((employee) => (attendanceDraft[employee.id] ?? attendanceForDate.get(employee.id)?.status)).length} of {activeEmployees.length} employees marked
+                </p>
+                <button type="button" onClick={saveAttendance} disabled={loading} className="admin-primary justify-center disabled:opacity-60">
+                  {loading ? <LoaderCircle size={18} className="animate-spin" /> : <Save size={18} />}
+                  Save attendance
+                </button>
+              </div>
+            </section>
+          ) : (
+            <section className="admin-panel">
+              <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+                <div>
+                  <h3 className="text-lg font-black">Monthly attendance</h3>
+                  <p className="mt-1 text-sm text-slate-500">Day-by-day status with employee totals for the selected month.</p>
+                </div>
+                <input type="month" value={attendanceMonth} onChange={(event) => setAttendanceMonth(event.target.value)} className="rounded-xl border border-slate-200 px-4 py-3 font-bold outline-none focus:border-[#1167b1]" />
+              </div>
+
+              <div className="mt-7 flex flex-wrap gap-2">
+                {attendanceStatuses.map((status) => <span key={status.value} className={`rounded-full px-3 py-1 text-xs font-extrabold ${status.color}`}>{status.short} = {status.label}</span>)}
+              </div>
+
+              <div className="mt-6 overflow-x-auto rounded-xl border border-slate-200">
+                <table className="attendance-matrix">
+                  <thead>
+                    <tr>
+                      <th className="sticky left-0 z-20 min-w-[210px] bg-slate-50 text-left">Employee</th>
+                      {monthDays.map((day) => <th key={day.date} className={day.isSunday ? 'bg-blue-50 text-blue-700' : ''}><span>{day.day}</span><small>{day.weekday}</small></th>)}
+                      <th className="bg-emerald-50 text-emerald-700">P</th>
+                      <th className="bg-violet-50 text-violet-700">HD</th>
+                      <th className="bg-amber-50 text-amber-700">L</th>
+                      <th className="bg-red-50 text-red-700">A</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {activeEmployees.map((employee) => {
+                      const records = monthDays.map((day) => monthlyAttendanceMap.get(`${employee.id}:${day.date}`));
+                      const count = (status) => records.filter((record) => record?.status === status).length;
+                      return (
+                        <tr key={employee.id}>
+                          <td className="sticky left-0 z-10 bg-white"><p className="font-bold text-slate-900">{employee.full_name}</p><p className="text-xs text-slate-400">{employee.employee_code}</p></td>
+                          {monthDays.map((day) => {
+                            const record = monthlyAttendanceMap.get(`${employee.id}:${day.date}`);
+                            const meta = record ? attendanceMeta[record.status] : null;
+                            return <td key={day.date} className={day.isSunday && !meta ? 'bg-blue-50/60' : ''}>{meta ? <span title={meta.label} className={`attendance-code ${meta.color}`}>{meta.short}</span> : <span className="text-slate-300">-</span>}</td>;
+                          })}
+                          <td className="font-black text-emerald-700">{count('present')}</td>
+                          <td className="font-black text-violet-700">{count('half_day')}</td>
+                          <td className="font-black text-amber-700">{count('leave')}</td>
+                          <td className="font-black text-red-700">{count('absent')}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          )}
+        </div>
       );
     }
 
@@ -454,8 +614,8 @@ function AdminPage() {
         </div>
         <div className="mt-7 overflow-x-auto">
           <table className="admin-table">
-            <thead><tr><th>Employee</th><th>Base salary</th><th>Present</th><th>Leave</th><th>Advances</th><th>Net payable</th></tr></thead>
-            <tbody>{payrollRows.map((row) => <tr key={row.id}><td><p className="font-bold">{row.full_name}</p><p className="text-xs text-slate-500">{row.designation}</p></td><td>{money(row.monthly_salary)}</td><td>{row.presentDays}</td><td>{row.leaveDays}</td><td className="text-red-600">-{money(row.approvedAdvance)}</td><td className="text-lg font-black text-emerald-700">{money(row.netSalary)}</td></tr>)}</tbody>
+            <thead><tr><th>Employee</th><th>Base salary</th><th>Present</th><th>Half day</th><th>Leave</th><th>Advances</th><th>Net payable</th></tr></thead>
+            <tbody>{payrollRows.map((row) => <tr key={row.id}><td><p className="font-bold">{row.full_name}</p><p className="text-xs text-slate-500">{row.designation}</p></td><td>{money(row.monthly_salary)}</td><td>{row.presentDays}</td><td>{row.halfDays}</td><td>{row.leaveDays}</td><td className="text-red-600">-{money(row.approvedAdvance)}</td><td className="text-lg font-black text-emerald-700">{money(row.netSalary)}</td></tr>)}</tbody>
           </table>
         </div>
         <div className="mt-6 flex gap-3 rounded-xl bg-amber-50 p-4 text-sm leading-6 text-amber-800"><CircleAlert size={20} className="mt-0.5 shrink-0" /><p>This is a payroll overview, not a statutory payroll engine. Add leave policy, deductions, overtime, PF, ESI, tax and payslip rules before using it for final salary processing.</p></div>

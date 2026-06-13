@@ -34,6 +34,8 @@ Use the public anonymous key. Never expose the Supabase service-role key in this
 - Secure administrator sign-in
 - Employee records and salary details
 - Daily attendance marking
+- Daily attendance dropdown with Present, Leave, Half Day, Absent and Holiday
+- Monthly day-by-day attendance register and status totals
 - Salary advance entry and history
 - Monthly salary less approved advances
 - Mobile-responsive dashboard
@@ -52,3 +54,13 @@ The current payroll page is an overview. Define and implement:
 - Approval roles and audit logs
 
 Employee and salary data is sensitive. Enable multi-factor authentication, schedule database backups and restrict admin accounts to trusted staff.
+
+## Updating an existing demo database
+
+If `supabase/schema.sql` was already run before the expanded attendance feature was added, run this file once in Supabase SQL Editor:
+
+```text
+supabase/migrations/20260613_attendance_statuses.sql
+```
+
+This expands the existing attendance status rule without deleting employee or attendance data.

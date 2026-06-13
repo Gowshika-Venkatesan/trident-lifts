@@ -19,7 +19,7 @@ create table if not exists public.attendance (
   id uuid primary key default gen_random_uuid(),
   employee_id uuid not null references public.employees(id) on delete cascade,
   attendance_date date not null,
-  status text not null check (status in ('present', 'absent', 'leave')),
+  status text not null check (status in ('present', 'leave', 'half_day', 'absent', 'holiday')),
   check_in time,
   check_out time,
   notes text,

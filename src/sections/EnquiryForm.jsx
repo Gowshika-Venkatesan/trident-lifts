@@ -5,7 +5,7 @@ const initialForm = {
   name: '',
   phone: '',
   email: '',
-  city: 'Bengaluru',
+  city: '',
   service: 'New elevator installation',
   buildingType: 'Residential apartment',
   floors: '',

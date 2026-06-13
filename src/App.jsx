@@ -1,19 +1,44 @@
 import { useEffect, useState } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { X } from 'lucide-react';
 import Navbar from './sections/Navbar';
-import Hero from './sections/Hero';
-import About from './sections/About';
-import Products from './sections/Products';
-import ServiceExcellence from './sections/ServiceExecellence';
-import Process from './sections/Process';
-import Gallery from './sections/Gallery';
-import Faq from './sections/Faq';
-import EnquiryForm from './sections/EnquiryForm';
 import Footer from './sections/Footer';
+import EnquiryForm from './sections/EnquiryForm';
 import FloatingContact from './components/FloatingContact';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ProductsPage from './pages/ProductsPage';
+import ServicesPage from './pages/ServicesPage';
+import GalleryPage from './pages/GalleryPage';
+import FaqPage from './pages/FaqPage';
+import ContactPage from './pages/ContactPage';
+import NotFoundPage from './pages/NotFoundPage';
+import AdminPage from './pages/AdminPage';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    const pageTitles = {
+      '/': 'Trident Elevating Solutions | Elevators Engineered for Life',
+      '/about': 'About Us | Trident Elevating Solutions',
+      '/products': 'Elevator Products | Trident Elevating Solutions',
+      '/services': 'Elevator Services | Trident Elevating Solutions',
+      '/gallery': 'Project Gallery | Trident Elevating Solutions',
+      '/faq': 'Elevator Planning FAQ | Trident Elevating Solutions',
+      '/contact': 'Contact Us | Trident Elevating Solutions',
+    };
+    document.title = pageTitles[pathname] || 'Trident Elevating Solutions';
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
+  const { pathname } = useLocation();
   const [showForm, setShowForm] = useState(false);
+  const isAdminRoute = pathname.startsWith('/admin');
 
   useEffect(() => {
     document.body.style.overflow = showForm ? 'hidden' : '';
@@ -25,21 +50,28 @@ function App() {
   const openQuote = () => setShowForm(true);
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-white text-slate-950">
-      <Navbar onQuoteClick={openQuote} />
-      <Hero onQuoteClick={openQuote} />
-      <About onQuoteClick={openQuote} />
-      <Products onQuoteClick={openQuote} />
-      <ServiceExcellence onQuoteClick={openQuote} />
-      <Process onQuoteClick={openQuote} />
-      <Gallery />
-      <Faq />
-      <Footer onQuoteClick={openQuote} />
-      <FloatingContact onQuoteClick={openQuote} />
+    <div className="min-h-screen overflow-x-hidden bg-[#f7f7f4] text-slate-950">
+      <ScrollToTop />
+      {!isAdminRoute && <Navbar onQuoteClick={openQuote} />}
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage onQuoteClick={openQuote} />} />
+          <Route path="/about" element={<AboutPage onQuoteClick={openQuote} />} />
+          <Route path="/products" element={<ProductsPage onQuoteClick={openQuote} />} />
+          <Route path="/services" element={<ServicesPage onQuoteClick={openQuote} />} />
+          <Route path="/gallery" element={<GalleryPage onQuoteClick={openQuote} />} />
+          <Route path="/faq" element={<FaqPage onQuoteClick={openQuote} />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </main>
+      {!isAdminRoute && <Footer onQuoteClick={openQuote} />}
+      {!isAdminRoute && <FloatingContact onQuoteClick={openQuote} />}
 
-      {showForm && (
+      {showForm && !isAdminRoute && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#07111f]/80 p-4 backdrop-blur-md"
           role="dialog"
           aria-modal="true"
           aria-labelledby="quote-title"
@@ -47,11 +79,11 @@ function App() {
             if (event.target === event.currentTarget) setShowForm(false);
           }}
         >
-          <div className="relative max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white shadow-2xl">
+          <div className="relative max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-[2rem] bg-white shadow-2xl">
             <button
               type="button"
               onClick={() => setShowForm(false)}
-              className="absolute right-4 top-4 z-10 rounded-full bg-slate-100 p-2 text-slate-600 transition hover:bg-slate-200 hover:text-slate-950"
+              className="absolute right-4 top-4 z-10 rounded-full bg-slate-100 p-2.5 text-slate-600 transition hover:bg-slate-200 hover:text-slate-950"
               aria-label="Close enquiry form"
             >
               <X size={20} />
@@ -60,7 +92,7 @@ function App() {
           </div>
         </div>
       )}
-    </main>
+    </div>
   );
 }
 

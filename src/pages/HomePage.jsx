@@ -75,9 +75,9 @@ const HomePage = ({ onQuoteClick }) => (
           </Link>
         </div>
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {products.slice(0, 6).map((product, index) => (
-            <Link key={product.slug} to="/products" className={`image-card group relative overflow-hidden rounded-[2rem] ${index === 0 ? 'lg:col-span-2' : ''}`}>
-              <img src={product.image} alt={product.title} className="h-full min-h-[430px] w-full object-cover transition duration-700 group-hover:scale-105" />
+          {products.slice(0, 6).map((product) => (
+            <Link key={product.slug} to="/products" className="image-card group relative aspect-[4/5] overflow-hidden rounded-[2rem]">
+              <img src={product.image} alt={product.title} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#07111f] via-[#07111f]/10 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-7 text-white sm:p-9">
                 <p className="overline text-cyan-300">{product.eyebrow}</p>

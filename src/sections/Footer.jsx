@@ -1,6 +1,7 @@
-import { ArrowUpRight, ClipboardList, MessageSquareText } from 'lucide-react';
+import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/TES.png';
+import { businessDetails } from '../data/siteData';
 
 const Footer = ({ onQuoteClick }) => (
   <footer className="mt-16 bg-[#07111f] px-6 pb-10 pt-20 text-white sm:px-10 lg:px-16">
@@ -40,8 +41,9 @@ const Footer = ({ onQuoteClick }) => (
         <div>
           <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Contact</h3>
           <div className="mt-6 space-y-5 text-sm leading-6 text-slate-400">
-            <p className="flex gap-3"><ClipboardList size={18} className="mt-0.5 shrink-0 text-cyan-300" /> Share your project requirements through our enquiry form.</p>
-            <p className="flex gap-3"><MessageSquareText size={18} className="mt-0.5 shrink-0 text-cyan-300" /> Our team will review the details and get in touch.</p>
+            <a href={`tel:${businessDetails.customerCareHref}`} className="flex gap-3 hover:text-white"><Phone size={18} className="mt-0.5 shrink-0 text-cyan-300" /> {businessDetails.customerCare}</a>
+            <a href={`mailto:${businessDetails.email}`} className="flex gap-3 break-all hover:text-white"><Mail size={18} className="mt-0.5 shrink-0 text-cyan-300" /> {businessDetails.email}</a>
+            <Link to="/contact" className="flex gap-3 hover:text-white"><MapPin size={18} className="mt-0.5 shrink-0 text-cyan-300" /> Factory and branch office details</Link>
           </div>
         </div>
       </div>

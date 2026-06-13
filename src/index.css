@@ -77,7 +77,7 @@ textarea:focus-visible {
 }
 
 .image-card {
-  min-height: 430px;
+  min-height: 0;
 }
 
 .field-label {

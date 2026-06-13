@@ -19,6 +19,21 @@ import commercialImg from '../assets/It.png';
 import warehouseImg from '../assets/ware.png';
 import hospitalityImg from '../assets/hotel.png';
 import industrialImg from '../assets/frigh.png';
+import galleryGold from '../assets/gallery-gold-luxe.png';
+import gallerySteel from '../assets/gallery-cool-steel.png';
+import galleryWalnut from '../assets/gallery-walnut-villa.png';
+import galleryPanoramic from '../assets/gallery-panoramic.png';
+
+export const businessDetails = {
+  website: 'www.tridentelevatingsolutions.com',
+  email: 'info@tridentelevatingsolutions.com',
+  customerCare: '+91 94812 25721',
+  customerCareHref: '+919481225721',
+  whatsapp: '+91 99163 69998',
+  whatsappHref: '919916369998',
+  factoryAddress: 'No. 347, Rajarajeshwari Layout, Begur-Koppa Road, Mylasandra Dinne, Bengaluru - 560068',
+  branchAddress: 'Urban Vibes Mall, 20th Main Road, near Maruthi Nagar Main Road, Chikka Madivala, BTM 1st Stage, Bengaluru - 560029',
+};
 
 export const products = [
   {
@@ -105,12 +120,16 @@ export const services = [
 ];
 
 export const galleryItems = [
-  { id: 1, category: 'Residential', title: 'Luxury home elevator', image: observationImg },
-  { id: 2, category: 'Commercial', title: 'Contemporary office elevator', image: commercialImg },
-  { id: 3, category: 'Industrial', title: 'Heavy-duty freight system', image: industrialImg },
-  { id: 4, category: 'Hospitality', title: 'Hotel passenger elevator', image: hospitalityImg },
-  { id: 5, category: 'Industrial', title: 'Warehouse goods lift', image: warehouseImg },
-  { id: 6, category: 'Residential', title: 'Private residence elevator', image: homeImg },
+  { id: 1, category: 'Hospitality', title: 'Midnight Gold', subtitle: 'Champagne metal, smoked mirror and warm linear light', image: galleryGold, concept: true },
+  { id: 2, category: 'Commercial', title: 'Azure Line', subtitle: 'Stone, stainless steel and cool architectural light', image: gallerySteel, concept: true },
+  { id: 3, category: 'Residential', title: 'Walnut Residence', subtitle: 'Warm timber, satin brass and soft ambient lighting', image: galleryWalnut, concept: true },
+  { id: 4, category: 'Hospitality', title: 'Panoramic Halo', subtitle: 'Curved glass, twilight views and a luminous ceiling', image: galleryPanoramic, concept: true },
+  { id: 5, category: 'Residential', title: 'Private Residence', subtitle: 'Refined vertical mobility for contemporary homes', image: observationImg },
+  { id: 6, category: 'Commercial', title: 'Executive Tower', subtitle: 'A polished arrival experience for the workplace', image: commercialImg },
+  { id: 7, category: 'Industrial', title: 'Heavy-Duty Freight', subtitle: 'Practical movement engineered around demanding loads', image: industrialImg },
+  { id: 8, category: 'Hospitality', title: 'Grand Lobby', subtitle: 'A welcoming passenger elevator for premium spaces', image: hospitalityImg },
+  { id: 9, category: 'Industrial', title: 'Warehouse Mobility', subtitle: 'Reliable goods movement for everyday operations', image: warehouseImg },
+  { id: 10, category: 'Residential', title: 'Compact Home Lift', subtitle: 'Space-conscious comfort for private living', image: homeImg },
 ];
 
 export const faqs = [

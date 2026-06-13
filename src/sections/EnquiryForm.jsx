@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CheckCircle2, LoaderCircle } from 'lucide-react';
+import { businessDetails } from '../data/siteData';
 
 const initialForm = {
   name: '',
@@ -29,8 +30,14 @@ const EnquiryForm = ({ onSuccess }) => {
 
     const endpoint = import.meta.env.VITE_FORM_ENDPOINT;
     if (!endpoint) {
-      setStatus('error');
-      setError('The enquiry inbox is being connected. Please use the contact details that will be published before launch.');
+      const subject = encodeURIComponent(`Website enquiry: ${form.service}`);
+      const body = encodeURIComponent(
+        `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email || '-'}\nCity: ${form.city}\nRequirement: ${form.service}\nBuilding: ${form.buildingType}\nFloors / stops: ${form.floors || '-'}\n\nDetails:\n${form.message || '-'}`,
+      );
+      window.location.href = `mailto:${businessDetails.email}?subject=${subject}&body=${body}`;
+      setStatus('success');
+      setForm(initialForm);
+      onSuccess?.();
       return;
     }
 

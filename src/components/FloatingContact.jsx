@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { ArrowUp, MessageSquareText } from 'lucide-react';
+import { ArrowUp, MessageCircle, MessageSquareText } from 'lucide-react';
+import { businessDetails } from '../data/siteData';
 
 const FloatingContact = ({ onQuoteClick }) => {
   const [showScroll, setShowScroll] = useState(false);
@@ -23,6 +24,15 @@ const FloatingContact = ({ onQuoteClick }) => {
           <ArrowUp size={19} />
         </button>
       )}
+      <a
+        href={`https://wa.me/${businessDetails.whatsappHref}?text=Hello%20Trident%20Elevating%20Solutions%2C%20I%20would%20like%20to%20discuss%20a%20lift%20requirement.`}
+        target="_blank"
+        rel="noreferrer"
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition hover:-translate-y-1"
+        aria-label="Contact Trident on WhatsApp"
+      >
+        <MessageCircle size={22} />
+      </a>
       <button
         type="button"
         onClick={onQuoteClick}

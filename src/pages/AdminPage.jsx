@@ -251,7 +251,9 @@ function AdminPage() {
   );
 
   const payrollRows = useMemo(() => {
+    const daysInPayrollMonth = getMonthDays(payrollMonth).length;
     return activeEmployees.map((employee) => {
+      const baseSalary = Number(employee.monthly_salary || 0);
       const approvedAdvance = advances
         .filter((advance) => advance.employee_id === employee.id && advance.status === 'approved' && advance.advance_date.startsWith(payrollMonth))
         .reduce((sum, advance) => sum + Number(advance.amount), 0);
@@ -259,13 +261,25 @@ function AdminPage() {
       const presentDays = employeeAttendance.filter((entry) => entry.status === 'present').length;
       const leaveDays = employeeAttendance.filter((entry) => entry.status === 'leave').length;
       const halfDays = employeeAttendance.filter((entry) => entry.status === 'half_day').length;
+      const absentDays = employeeAttendance.filter((entry) => entry.status === 'absent').length;
+      const holidayDays = employeeAttendance.filter((entry) => entry.status === 'holiday').length;
+      const dailyRate = daysInPayrollMonth ? baseSalary / daysInPayrollMonth : 0;
+      const attendanceDeduction = dailyRate * (absentDays + halfDays * 0.5);
+      const grossAfterAttendance = Math.max(baseSalary - attendanceDeduction, 0);
       return {
         ...employee,
+        baseSalary,
         approvedAdvance,
         presentDays,
         leaveDays,
         halfDays,
-        netSalary: Math.max(Number(employee.monthly_salary || 0) - approvedAdvance, 0),
+        absentDays,
+        holidayDays,
+        daysInPayrollMonth,
+        dailyRate,
+        attendanceDeduction,
+        grossAfterAttendance,
+        netSalary: Math.max(grossAfterAttendance - approvedAdvance, 0),
       };
     });
   }, [activeEmployees, advances, attendance, payrollMonth]);
@@ -607,19 +621,86 @@ function AdminPage() {
     }
 
     return (
-      <section className="admin-panel">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-          <div><h2 className="admin-title">Payroll overview</h2><p className="mt-1 text-sm text-slate-500">Salary less approved advances for the selected month.</p></div>
-          <input type="month" value={payrollMonth} onChange={(event) => setPayrollMonth(event.target.value)} className="rounded-xl border border-slate-200 px-4 py-3 font-bold outline-none focus:border-[#1167b1]" />
+      <div className="space-y-7">
+        <section className="admin-panel">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+            <div>
+              <h2 className="admin-title">Payroll calculation</h2>
+              <p className="mt-1 text-sm text-slate-500">Attendance deductions and salary advances for the selected month.</p>
+            </div>
+            <input type="month" value={payrollMonth} onChange={(event) => setPayrollMonth(event.target.value)} className="rounded-xl border border-slate-200 px-4 py-3 font-bold outline-none focus:border-[#1167b1]" />
+          </div>
+
+          <div className="mt-6 grid gap-4 rounded-2xl bg-[#07111f] p-5 text-white sm:grid-cols-3">
+            <div><p className="text-xs font-black uppercase tracking-wider text-slate-400">Salary basis</p><p className="mt-2 text-lg font-black">{getMonthDays(payrollMonth).length} calendar days</p></div>
+            <div><p className="text-xs font-black uppercase tracking-wider text-slate-400">Absent deduction</p><p className="mt-2 text-lg font-black">1 full daily rate</p></div>
+            <div><p className="text-xs font-black uppercase tracking-wider text-slate-400">Half-day deduction</p><p className="mt-2 text-lg font-black">50% of daily rate</p></div>
+          </div>
+
+          <div className="mt-7 overflow-x-auto">
+            <table className="admin-table min-w-[1180px]">
+              <thead>
+                <tr>
+                  <th>Employee</th>
+                  <th>Base salary</th>
+                  <th>Daily rate</th>
+                  <th>Present</th>
+                  <th>Leave</th>
+                  <th>Half day</th>
+                  <th>Absent</th>
+                  <th>Attendance deduction</th>
+                  <th>Advances</th>
+                  <th>Net payable</th>
+                </tr>
+              </thead>
+              <tbody>
+                {payrollRows.map((row) => (
+                  <tr key={row.id}>
+                    <td><p className="font-bold text-slate-900">{row.full_name}</p><p className="text-xs text-slate-500">{row.designation}</p></td>
+                    <td className="font-bold">{money(row.baseSalary)}</td>
+                    <td>{money(row.dailyRate)}</td>
+                    <td className="font-bold text-emerald-700">{row.presentDays}</td>
+                    <td className="font-bold text-amber-700">{row.leaveDays}</td>
+                    <td className="font-bold text-violet-700">{row.halfDays}</td>
+                    <td className="font-bold text-red-700">{row.absentDays}</td>
+                    <td className="font-bold text-red-600">-{money(row.attendanceDeduction)}</td>
+                    <td className="font-bold text-red-600">-{money(row.approvedAdvance)}</td>
+                    <td className="text-lg font-black text-emerald-700">{money(row.netSalary)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className="admin-panel">
+          <h2 className="admin-title">Calculation breakdown</h2>
+          <div className="mt-6 grid gap-5 lg:grid-cols-2">
+            {payrollRows.map((row) => (
+              <article key={row.id} className="rounded-2xl border border-slate-200 p-5">
+                <div className="flex items-start justify-between gap-4">
+                  <div><p className="font-black">{row.full_name}</p><p className="text-sm text-slate-500">{row.designation}</p></div>
+                  <p className="text-xl font-black text-emerald-700">{money(row.netSalary)}</p>
+                </div>
+                <div className="mt-5 space-y-3 text-sm">
+                  <div className="flex justify-between"><span className="text-slate-500">Base monthly salary</span><strong>{money(row.baseSalary)}</strong></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Daily rate ({row.daysInPayrollMonth} days)</span><strong>{money(row.dailyRate)}</strong></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Absent: {row.absentDays} day(s)</span><strong className="text-red-600">-{money(row.dailyRate * row.absentDays)}</strong></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Half day: {row.halfDays}</span><strong className="text-red-600">-{money(row.dailyRate * row.halfDays * 0.5)}</strong></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Salary after attendance</span><strong>{money(row.grossAfterAttendance)}</strong></div>
+                  <div className="flex justify-between border-t border-slate-200 pt-3"><span className="text-slate-500">Approved advances</span><strong className="text-red-600">-{money(row.approvedAdvance)}</strong></div>
+                  <div className="flex justify-between rounded-xl bg-emerald-50 px-4 py-3"><span className="font-bold text-emerald-800">Final payable</span><strong className="text-emerald-800">{money(row.netSalary)}</strong></div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <div className="flex gap-3 rounded-xl bg-amber-50 p-4 text-sm leading-6 text-amber-800">
+          <CircleAlert size={20} className="mt-0.5 shrink-0" />
+          <p>Current rule: Present, Leave and Holiday are paid. Absent deducts one calendar-day rate and Half Day deducts half a rate. Unmarked dates do not deduct salary. Confirm this company policy before final payroll use; PF, ESI, tax, overtime and other statutory items are not yet included.</p>
         </div>
-        <div className="mt-7 overflow-x-auto">
-          <table className="admin-table">
-            <thead><tr><th>Employee</th><th>Base salary</th><th>Present</th><th>Half day</th><th>Leave</th><th>Advances</th><th>Net payable</th></tr></thead>
-            <tbody>{payrollRows.map((row) => <tr key={row.id}><td><p className="font-bold">{row.full_name}</p><p className="text-xs text-slate-500">{row.designation}</p></td><td>{money(row.monthly_salary)}</td><td>{row.presentDays}</td><td>{row.halfDays}</td><td>{row.leaveDays}</td><td className="text-red-600">-{money(row.approvedAdvance)}</td><td className="text-lg font-black text-emerald-700">{money(row.netSalary)}</td></tr>)}</tbody>
-          </table>
-        </div>
-        <div className="mt-6 flex gap-3 rounded-xl bg-amber-50 p-4 text-sm leading-6 text-amber-800"><CircleAlert size={20} className="mt-0.5 shrink-0" /><p>This is a payroll overview, not a statutory payroll engine. Add leave policy, deductions, overtime, PF, ESI, tax and payslip rules before using it for final salary processing.</p></div>
-      </section>
+      </div>
     );
   };
 

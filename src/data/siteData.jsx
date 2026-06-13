@@ -32,8 +32,12 @@ import thalappakattiLogo from '../assets/thala.jpg';
 export const businessDetails = {
   website: 'www.tridentelevatingsolutions.com',
   email: 'info@tridentelevatingsolutions.com',
-  customerCare: '+91 94812 25721',
-  customerCareHref: '+919481225721',
+  customerCare: '+91 99163 69998 / +91 99163 79998',
+  customerCareHref: '+919916369998',
+  customerCareNumbers: [
+    { label: '+91 99163 69998', href: '+919916369998' },
+    { label: '+91 99163 79998', href: '+919916379998' },
+  ],
   whatsapp: '+91 99163 69998',
   whatsappHref: '919916369998',
   factoryAddress: 'No. 347, Rajarajeshwari Layout, Begur-Koppa Road, Mylasandra Dinne, Bengaluru - 560068',

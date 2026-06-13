@@ -42,7 +42,17 @@ const Footer = ({ onQuoteClick }) => (
         <div>
           <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Contact</h3>
           <div className="mt-6 space-y-5 text-sm leading-6 text-slate-400">
-            <a href={`tel:${businessDetails.customerCareHref}`} className="flex gap-3 hover:text-white"><Phone size={18} className="mt-0.5 shrink-0 text-cyan-300" /> {businessDetails.customerCare}</a>
+            <div className="flex gap-3">
+              <Phone size={18} className="mt-0.5 shrink-0 text-cyan-300" />
+              <div className="flex flex-wrap items-center gap-x-2">
+                {businessDetails.customerCareNumbers.map((number, index) => (
+                  <span key={number.href} className="flex items-center gap-2">
+                    {index > 0 && <span className="text-slate-600">/</span>}
+                    <a href={`tel:${number.href}`} className="hover:text-white">{number.label}</a>
+                  </span>
+                ))}
+              </div>
+            </div>
             <a href={`mailto:${businessDetails.email}`} className="flex gap-3 break-all hover:text-white"><Mail size={18} className="mt-0.5 shrink-0 text-cyan-300" /> {businessDetails.email}</a>
             <a
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(businessDetails.branchAddress)}`}

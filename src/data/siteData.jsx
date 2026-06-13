@@ -23,6 +23,11 @@ import galleryGold from '../assets/gallery-gold-luxe.png';
 import gallerySteel from '../assets/gallery-cool-steel.png';
 import galleryWalnut from '../assets/gallery-walnut-villa.png';
 import galleryPanoramic from '../assets/gallery-panoramic.png';
+import a2bLogo from '../assets/a2b.png';
+import juniorLogo from '../assets/Junior.jpg';
+import joyLogo from '../assets/Joy.png';
+import zudioLogo from '../assets/zudio.png';
+import thalappakattiLogo from '../assets/thala.jpg';
 
 export const businessDetails = {
   website: 'www.tridentelevatingsolutions.com',
@@ -117,6 +122,14 @@ export const services = [
     icon: <RefreshCw size={28} />,
     text: 'Assessment-led upgrades for ageing controls, drives, fixtures, doors, cabins and safety systems.',
   },
+];
+
+export const clients = [
+  { id: 1, name: 'A2B - Adyar Ananda Bhavan', sector: 'Hospitality', logo: a2bLogo },
+  { id: 2, name: 'Junior Kuppanna', sector: 'Hospitality', logo: juniorLogo },
+  { id: 3, name: 'Joyalukkas', sector: 'Retail', logo: joyLogo },
+  { id: 4, name: 'Zudio', sector: 'Retail', logo: zudioLogo },
+  { id: 5, name: 'Dindigul Thalappakatti', sector: 'Hospitality', logo: thalappakattiLogo },
 ];
 
 export const galleryItems = [

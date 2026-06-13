@@ -1,18 +1,47 @@
-import { ArrowRight, ArrowUpRight, Check, MoveUpRight } from 'lucide-react';
+import {
+  ArrowRight,
+  ArrowUpRight,
+  MoveUpRight,
+  PenTool,
+  ShieldCheck,
+  Sparkles,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CallToAction from '../components/CallToAction';
-import { products, services } from '../data/siteData';
-import heroImage from '../assets/Lift.png';
+import { clients, products, services } from '../data/siteData';
+import heroImage from '../assets/hero-elevator-luxe.png';
 import featureImage from '../assets/Lux.png';
 import serviceImage from '../assets/It.png';
 
+const heroCapabilities = [
+  {
+    number: '01',
+    icon: <PenTool size={24} />,
+    title: 'Planned around the building',
+    text: 'Traffic, space, structure and user needs shape every recommendation.',
+  },
+  {
+    number: '02',
+    icon: <Sparkles size={24} />,
+    title: 'Cabins with architectural intent',
+    text: 'Materials, lighting and controls are composed as one refined experience.',
+  },
+  {
+    number: '03',
+    icon: <ShieldCheck size={24} />,
+    title: 'Supported for the lifecycle',
+    text: 'Installation, maintenance and modernization stay connected after handover.',
+  },
+];
+
 const HomePage = ({ onQuoteClick }) => (
   <>
-    <section className="relative flex min-h-[780px] items-end overflow-hidden bg-[#07111f] pt-28 text-white lg:min-h-screen">
-      <img src={heroImage} alt="Premium Trident elevator interior" className="absolute inset-0 h-full w-full object-cover object-center" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#07111f] via-[#07111f]/80 to-transparent" />
+    <section className="relative flex min-h-[860px] items-end overflow-hidden bg-[#07111f] pt-28 text-white lg:min-h-screen">
+      <img src={heroImage} alt="Illuminated premium elevator cabin" className="absolute inset-0 h-full w-full object-cover object-center" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#07111f] via-[#07111f]/82 to-[#07111f]/5" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#07111f]/90 via-transparent to-[#07111f]/30" />
-      <div className="relative mx-auto w-full max-w-[1440px] px-6 pb-16 sm:px-10 lg:px-16 lg:pb-20">
+      <div className="absolute left-[52%] top-28 hidden h-48 w-48 rounded-full bg-cyan-300/15 blur-3xl lg:block" />
+      <div className="relative mx-auto w-full max-w-[1440px] px-6 pb-10 sm:px-10 lg:px-16 lg:pb-12">
         <div className="max-w-4xl">
           <p className="overline text-cyan-300">Trident Elevating Solutions</p>
           <h1 className="mt-6 font-display text-5xl font-semibold leading-[0.94] tracking-[-0.055em] sm:text-7xl lg:text-[6.8rem]">
@@ -33,12 +62,22 @@ const HomePage = ({ onQuoteClick }) => (
           </div>
         </div>
 
-        <div className="mt-14 grid max-w-3xl gap-px overflow-hidden rounded-2xl border border-white/15 bg-white/15 sm:grid-cols-3">
-          {['Application-led planning', 'Refined cabin design', 'Lifecycle support'].map((label) => (
-            <div key={label} className="flex items-center gap-3 bg-[#07111f]/65 px-5 py-4 text-sm font-semibold backdrop-blur">
-              <Check size={17} className="text-cyan-300" />
-              {label}
-            </div>
+        <div className="mt-12 grid gap-3 lg:grid-cols-3">
+          {heroCapabilities.map((item) => (
+            <article
+              key={item.number}
+              className="group relative overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0d1a2a]/80 p-5 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/50 hover:bg-[#132235]/95 sm:p-6"
+            >
+              <div className="flex items-start justify-between">
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-300/10 text-cyan-300">
+                  {item.icon}
+                </span>
+                <span className="text-xs font-black tracking-[0.2em] text-white/35">{item.number}</span>
+              </div>
+              <h2 className="mt-5 font-display text-xl font-semibold">{item.title}</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-300">{item.text}</p>
+              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-cyan-300 transition-all duration-500 group-hover:w-full" />
+            </article>
           ))}
         </div>
       </div>
@@ -60,6 +99,42 @@ const HomePage = ({ onQuoteClick }) => (
             Discover Trident <ArrowUpRight size={18} />
           </Link>
         </div>
+      </div>
+    </section>
+
+    <section className="bg-[#07111f] px-6 py-24 text-white sm:px-10 lg:px-16 lg:py-28">
+      <div className="mx-auto max-w-[1312px]">
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div>
+            <p className="overline text-cyan-300">Selected client showcase</p>
+            <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
+              Built to serve ambitious spaces.
+            </h2>
+          </div>
+          <Link to="/clients" className="link-arrow text-cyan-300 hover:text-white">
+            Meet our clients <ArrowUpRight size={18} />
+          </Link>
+        </div>
+
+        <div className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
+          {clients.map((client) => (
+            <article
+              key={client.id}
+              className="group flex min-h-44 flex-col justify-between rounded-[1.6rem] border border-white/10 bg-white p-5 text-[#07111f] transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-950/40"
+            >
+              <div className="flex min-h-20 items-center justify-center rounded-xl bg-white">
+                <img src={client.logo} alt={`${client.name} logo`} className="max-h-16 max-w-[90%] object-contain grayscale transition duration-300 group-hover:grayscale-0" />
+              </div>
+              <div className="mt-5 border-t border-slate-100 pt-4">
+                <p className="text-[0.65rem] font-black uppercase tracking-[0.18em] text-[#1167b1]">{client.sector}</p>
+                <p className="mt-1 text-sm font-extrabold">{client.name}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="mt-6 text-xs leading-5 text-slate-500">
+          Client names and logos are included as a demonstration showcase and should be published after relationship and brand-use approval.
+        </p>
       </div>
     </section>
 

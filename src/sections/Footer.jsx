@@ -23,6 +23,7 @@ const Footer = ({ onQuoteClick }) => (
           <div className="mt-6 flex flex-col gap-4 text-sm font-semibold text-slate-300">
             <Link to="/about" className="hover:text-white">About us</Link>
             <Link to="/gallery" className="hover:text-white">Gallery</Link>
+            <Link to="/clients" className="hover:text-white">Our clients</Link>
             <Link to="/faq" className="hover:text-white">FAQ</Link>
             <Link to="/contact" className="hover:text-white">Contact</Link>
           </div>
@@ -43,7 +44,15 @@ const Footer = ({ onQuoteClick }) => (
           <div className="mt-6 space-y-5 text-sm leading-6 text-slate-400">
             <a href={`tel:${businessDetails.customerCareHref}`} className="flex gap-3 hover:text-white"><Phone size={18} className="mt-0.5 shrink-0 text-cyan-300" /> {businessDetails.customerCare}</a>
             <a href={`mailto:${businessDetails.email}`} className="flex gap-3 break-all hover:text-white"><Mail size={18} className="mt-0.5 shrink-0 text-cyan-300" /> {businessDetails.email}</a>
-            <Link to="/contact" className="flex gap-3 hover:text-white"><MapPin size={18} className="mt-0.5 shrink-0 text-cyan-300" /> Factory and branch office details</Link>
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(businessDetails.branchAddress)}`}
+              target="_blank"
+              rel="noreferrer"
+              className="flex gap-3 hover:text-white"
+            >
+              <MapPin size={18} className="mt-0.5 shrink-0 text-cyan-300" />
+              <span><strong className="text-slate-300">Branch:</strong> {businessDetails.branchAddress}</span>
+            </a>
           </div>
         </div>
       </div>

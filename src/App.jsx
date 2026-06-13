@@ -14,6 +14,7 @@ import FaqPage from './pages/FaqPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
 import AdminPage from './pages/AdminPage';
+import ClientsPage from './pages/ClientsPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -26,6 +27,7 @@ function ScrollToTop() {
       '/products': 'Elevator Products | Trident Elevating Solutions',
       '/services': 'Elevator Services | Trident Elevating Solutions',
       '/gallery': 'Project Gallery | Trident Elevating Solutions',
+      '/clients': 'Our Clients | Trident Elevating Solutions',
       '/faq': 'Elevator Planning FAQ | Trident Elevating Solutions',
       '/contact': 'Contact Us | Trident Elevating Solutions',
     };
@@ -60,6 +62,7 @@ function App() {
           <Route path="/products" element={<ProductsPage onQuoteClick={openQuote} />} />
           <Route path="/services" element={<ServicesPage onQuoteClick={openQuote} />} />
           <Route path="/gallery" element={<GalleryPage onQuoteClick={openQuote} />} />
+          <Route path="/clients" element={<ClientsPage onQuoteClick={openQuote} />} />
           <Route path="/faq" element={<FaqPage onQuoteClick={openQuote} />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/admin" element={<AdminPage />} />

@@ -19,7 +19,7 @@ const Footer = ({ onQuoteClick }) => (
         </div>
 
         <div>
-          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Company</h3>
+          <h3 className="text-xs font-black text-slate-500">Company</h3>
           <div className="mt-6 flex flex-col gap-4 text-sm font-semibold text-slate-300">
             <Link to="/about" className="hover:text-white">About us</Link>
             <Link to="/gallery" className="hover:text-white">Gallery</Link>
@@ -30,7 +30,7 @@ const Footer = ({ onQuoteClick }) => (
         </div>
 
         <div>
-          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Solutions</h3>
+          <h3 className="text-xs font-black text-slate-500">Solutions</h3>
           <div className="mt-6 flex flex-col gap-4 text-sm font-semibold text-slate-300">
             <Link to="/products" className="hover:text-white">Products</Link>
             <Link to="/services" className="hover:text-white">Installation</Link>
@@ -40,7 +40,7 @@ const Footer = ({ onQuoteClick }) => (
         </div>
 
         <div>
-          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Contact</h3>
+          <h3 className="text-xs font-black text-slate-500">Contact</h3>
           <div className="mt-6 space-y-5 text-sm leading-6 text-slate-400">
             <div className="flex gap-3">
               <Phone size={18} className="mt-0.5 shrink-0 text-cyan-300" />

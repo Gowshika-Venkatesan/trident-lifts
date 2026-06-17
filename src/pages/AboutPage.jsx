@@ -57,7 +57,7 @@ const AboutPage = ({ onQuoteClick }) => (
   <>
     <PageHero
       eyebrow="About Trident"
-      title="Engineering confidence into every journey."
+      title="Engineering Confidence into Every Journey."
       description="We approach vertical mobility as a long-term responsibility, bringing together technical clarity, thoughtful design and dependable care."
       image={heroImage}
     />
@@ -67,7 +67,7 @@ const AboutPage = ({ onQuoteClick }) => (
         <div>
           <p className="overline">Who we are</p>
           <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
-            Built for people who expect more from an elevator company.
+            Built for People Who Expect More from an Elevator Company.
           </h2>
         </div>
         <div className="space-y-6 text-lg leading-8 text-slate-600">
@@ -107,7 +107,7 @@ const AboutPage = ({ onQuoteClick }) => (
           <div>
             <p className="overline">Founders & directors</p>
             <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
-              Led by hands-on elevator and manufacturing specialists.
+              Led by Hands-on Elevator and Manufacturing Specialists.
             </h2>
           </div>
           <p className="max-w-2xl text-lg leading-8 text-slate-600">
@@ -129,7 +129,7 @@ const AboutPage = ({ onQuoteClick }) => (
                 }`}>
                   <UserRound size={48} />
                 </div>
-                <span className={`absolute bottom-6 rounded-full px-4 py-2 text-xs font-black uppercase tracking-[0.16em] ${
+                <span className={`absolute bottom-6 rounded-full px-4 py-2 text-xs font-black ${
                   index === 0 ? 'bg-white text-[#1167b1]' : 'bg-[#07111f] text-white'
                 }`}>
                   Photo space
@@ -137,7 +137,7 @@ const AboutPage = ({ onQuoteClick }) => (
               </div>
 
               <div className="p-7 sm:p-8">
-                <p className={`text-xs font-black uppercase tracking-[0.18em] ${index === 0 ? 'text-cyan-100' : 'text-[#1167b1]'}`}>
+                <p className={`text-xs font-black ${index === 0 ? 'text-cyan-100' : 'text-[#1167b1]'}`}>
                   {director.role}
                 </p>
                 <h3 className="mt-3 font-display text-3xl font-semibold">{director.name}</h3>
@@ -194,7 +194,7 @@ const AboutPage = ({ onQuoteClick }) => (
       </div>
     </section>
 
-    <CallToAction onQuoteClick={onQuoteClick} title="Build your next journey with Trident." />
+    <CallToAction onQuoteClick={onQuoteClick} title="Build Your Next Journey with Trident." />
   </>
 );
 

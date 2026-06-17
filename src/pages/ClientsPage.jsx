@@ -31,7 +31,7 @@ const ClientsPage = ({ onQuoteClick }) => (
   <>
     <PageHero
       eyebrow="Our clients"
-      title="Trusted movement for places people remember."
+      title="Trusted Movement for Places People Remember."
       description="We bring technical clarity, refined design and dependable lifecycle support to every relationship."
       image={heroImage}
     />
@@ -42,7 +42,7 @@ const ClientsPage = ({ onQuoteClick }) => (
           <div>
             <p className="overline">Selected showcase</p>
             <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
-              Relationships designed to go beyond handover.
+              Relationships Designed to Go Beyond Handover.
             </h2>
           </div>
           <p className="max-w-2xl text-lg leading-8 text-slate-600">
@@ -65,7 +65,7 @@ const ClientsPage = ({ onQuoteClick }) => (
               </div>
               <div className="mt-7 flex items-end justify-between gap-5">
                 <div>
-                  <p className={`text-[0.65rem] font-black uppercase tracking-[0.2em] ${index === 0 ? 'text-cyan-100' : 'text-[#1167b1]'}`}>
+                  <p className={`text-xs font-black ${index === 0 ? 'text-cyan-100' : 'text-[#1167b1]'}`}>
                     {client.sector}
                   </p>
                   <h3 className="mt-2 font-display text-2xl font-semibold">{client.name}</h3>
@@ -78,7 +78,7 @@ const ClientsPage = ({ onQuoteClick }) => (
           <article className="flex min-h-72 flex-col justify-between rounded-[2rem] bg-[#e6f3f8] p-8">
             <span className="overline text-[#1167b1]">Your project</span>
             <div>
-              <h3 className="font-display text-3xl font-semibold leading-tight">The next successful relationship can begin here.</h3>
+              <h3 className="font-display text-3xl font-semibold leading-tight">The Next Successful Relationship Can Begin Here.</h3>
               <button type="button" onClick={onQuoteClick} className="link-arrow mt-6">
                 Discuss your lift <ArrowUpRight size={18} />
               </button>
@@ -109,7 +109,7 @@ const ClientsPage = ({ onQuoteClick }) => (
 
     <CallToAction
       onQuoteClick={onQuoteClick}
-      title="A better elevator relationship starts with a better conversation."
+      title="A Better Elevator Relationship Starts with a Better Conversation."
     />
   </>
 );

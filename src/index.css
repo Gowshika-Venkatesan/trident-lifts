@@ -56,9 +56,8 @@ textarea:focus-visible {
 .overline {
   font-size: 0.72rem;
   font-weight: 900;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
   line-height: 1.4;
-  text-transform: uppercase;
   color: #1167b1;
 }
 
@@ -88,7 +87,6 @@ textarea:focus-visible {
   font-size: 0.72rem;
   font-weight: 850;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: #64748b;
 }
 

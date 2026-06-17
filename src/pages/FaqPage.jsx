@@ -12,7 +12,7 @@ const FaqPage = ({ onQuoteClick }) => {
     <>
       <PageHero
         eyebrow="Planning FAQ"
-        title="Clear answers before important decisions."
+        title="Clear Answers before Important Decisions."
         description="A practical starting point for homeowners, architects, developers and property teams planning elevator work."
         image={heroImage}
       />
@@ -21,7 +21,7 @@ const FaqPage = ({ onQuoteClick }) => {
         <div className="mx-auto grid max-w-[1312px] gap-14 lg:grid-cols-[.65fr_1.35fr]">
           <div>
             <MessageCircleQuestion size={36} className="text-[#1167b1]" />
-            <h2 className="mt-6 font-display text-4xl font-semibold leading-tight sm:text-5xl">Start with the right questions.</h2>
+            <h2 className="mt-6 font-display text-4xl font-semibold leading-tight sm:text-5xl">Start with the Right Questions.</h2>
             <p className="mt-5 leading-7 text-slate-600">
               Final specifications, feasibility, pricing and timelines require project information and, where relevant, a site assessment.
             </p>
@@ -49,7 +49,7 @@ const FaqPage = ({ onQuoteClick }) => {
         </div>
       </section>
 
-      <CallToAction onQuoteClick={onQuoteClick} title="Your building may need a more specific answer." />
+      <CallToAction onQuoteClick={onQuoteClick} title="Your Building May Need a More Specific Answer." />
     </>
   );
 };

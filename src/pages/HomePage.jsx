@@ -15,19 +15,16 @@ import serviceImage from '../assets/It.png';
 
 const heroCapabilities = [
   {
-    number: '01',
     icon: <PenTool size={24} />,
-    title: 'Planned Around the Building',
+    title: 'Planned around the Building',
     text: 'Traffic, space, structure and user needs shape every recommendation.',
   },
   {
-    number: '02',
     icon: <Sparkles size={24} />,
-    title: 'Cabins With Architectural Intent',
+    title: 'Cabins with Architectural Intent',
     text: 'Materials, lighting and controls are composed as one refined experience.',
   },
   {
-    number: '03',
     icon: <ShieldCheck size={24} />,
     title: 'Supported for the Lifecycle',
     text: 'Installation, maintenance and modernization stay connected after handover.',
@@ -52,11 +49,11 @@ const HomePage = ({ onQuoteClick }) => (
             Elevators shaped around the building, the journey and the people who make it matter.
           </p>
           <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-            <button type="button" onClick={onQuoteClick} className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#1167b1] px-7 py-4 text-sm font-extrabold uppercase tracking-wider text-white transition hover:bg-cyan-600">
+            <button type="button" onClick={onQuoteClick} className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#1167b1] px-7 py-4 text-sm font-extrabold text-white transition hover:bg-cyan-600">
               Start your project
               <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
             </button>
-            <Link to="/products" className="inline-flex items-center justify-center rounded-full border border-white/40 bg-white/10 px-7 py-4 text-sm font-extrabold uppercase tracking-wider text-white backdrop-blur transition hover:bg-white hover:text-[#07111f]">
+            <Link to="/products" className="inline-flex items-center justify-center rounded-full border border-white/40 bg-white/10 px-7 py-4 text-sm font-extrabold text-white backdrop-blur transition hover:bg-white hover:text-[#07111f]">
               Explore elevators
             </Link>
           </div>
@@ -65,14 +62,13 @@ const HomePage = ({ onQuoteClick }) => (
         <div className="mt-12 grid gap-3 lg:grid-cols-3">
           {heroCapabilities.map((item) => (
             <article
-              key={item.number}
+              key={item.title}
               className="group relative overflow-hidden rounded-[1.6rem] border border-white/15 bg-[#0d1a2a]/80 p-5 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/50 hover:bg-[#132235]/95 sm:p-6"
             >
-              <div className="flex items-start justify-between">
+              <div className="flex items-start">
                 <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-300/10 text-cyan-300">
                   {item.icon}
                 </span>
-                <span className="text-xs font-black tracking-[0.2em] text-white/35">{item.number}</span>
               </div>
               <h2 className="mt-5 font-display text-xl font-semibold">{item.title}</h2>
               <p className="mt-2 text-sm leading-6 text-slate-300">{item.text}</p>
@@ -126,7 +122,7 @@ const HomePage = ({ onQuoteClick }) => (
                 <img src={client.logo} alt={`${client.name} logo`} className="max-h-16 max-w-[90%] object-contain grayscale transition duration-300 group-hover:grayscale-0" />
               </div>
               <div className="mt-5 border-t border-slate-100 pt-4">
-                <p className="text-[0.65rem] font-black uppercase tracking-[0.18em] text-[#1167b1]">{client.sector}</p>
+                <p className="text-xs font-black text-[#1167b1]">{client.sector}</p>
                 <p className="mt-1 text-sm font-extrabold">{client.name}</p>
               </div>
             </article>
@@ -173,15 +169,14 @@ const HomePage = ({ onQuoteClick }) => (
       <div className="mx-auto grid max-w-[1312px] overflow-hidden rounded-[2.5rem] bg-[#07111f] text-white lg:grid-cols-2">
         <div className="p-8 sm:p-12 lg:p-16">
           <p className="overline text-cyan-300">Complete lifecycle care</p>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight sm:text-5xl">The Relationship Continues After Handover.</h2>
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight sm:text-5xl">The Relationship Continues after Handover.</h2>
           <p className="mt-6 leading-8 text-slate-300">
             Installation, preventive maintenance, responsive support and modernization are considered as one connected service journey.
           </p>
           <div className="mt-9 grid gap-3">
             {services.map((service) => (
-              <div key={service.title} className="flex items-center justify-between border-b border-white/10 py-4">
+              <div key={service.title} className="border-b border-white/10 py-4">
                 <span className="font-bold">{service.title}</span>
-                <span className="text-xs font-black tracking-widest text-cyan-300">{service.number}</span>
               </div>
             ))}
           </div>

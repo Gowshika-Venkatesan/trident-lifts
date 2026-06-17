@@ -15,7 +15,7 @@ const GalleryPage = ({ onQuoteClick }) => {
     <>
       <PageHero
         eyebrow="Project Gallery"
-        title="Elevators made to be experienced."
+        title="Elevators Made to Be Experienced."
         description="A dedicated space for completed Trident installations, cabin details, architectural integration and project stories."
         image={heroImage}
       />
@@ -25,7 +25,7 @@ const GalleryPage = ({ onQuoteClick }) => {
           <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
             <div className="max-w-3xl">
               <p className="overline">Selected work</p>
-              <h2 className="mt-5 font-display text-4xl font-semibold leading-tight sm:text-6xl">A growing record of spaces we elevate.</h2>
+              <h2 className="mt-5 font-display text-4xl font-semibold leading-tight sm:text-6xl">A Growing Record of Spaces We Elevate.</h2>
               <p className="mt-6 max-w-2xl leading-7 text-slate-600">
                 Explore premium cabin directions and elevator environments across residential, commercial, hospitality and industrial applications.
               </p>
@@ -36,7 +36,7 @@ const GalleryPage = ({ onQuoteClick }) => {
                   type="button"
                   key={category}
                   onClick={() => setFilter(category)}
-                  className={`rounded-full px-5 py-2.5 text-xs font-extrabold uppercase tracking-wider transition ${
+                  className={`rounded-full px-5 py-2.5 text-xs font-extrabold transition ${
                     filter === category ? 'bg-[#07111f] text-white' : 'border border-slate-300 bg-transparent text-slate-600 hover:border-[#1167b1] hover:text-[#1167b1]'
                   }`}
                 >
@@ -56,7 +56,7 @@ const GalleryPage = ({ onQuoteClick }) => {
                     <p className="overline text-cyan-300">{item.category}</p>
                     <h3 className="mt-2 font-display text-3xl font-semibold">{item.title}</h3>
                     <p className="mt-2 max-w-xs text-sm leading-6 text-slate-300">{item.subtitle}</p>
-                    {item.concept && <span className="mt-3 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-black uppercase tracking-widest">Design concept</span>}
+                    {item.concept && <span className="mt-3 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-black">Design concept</span>}
                   </div>
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-[#07111f]">
                     <MoveUpRight size={20} />
@@ -68,7 +68,7 @@ const GalleryPage = ({ onQuoteClick }) => {
 
           <div className="mt-16 flex flex-col items-center rounded-[2rem] border border-slate-200 bg-white px-8 py-14 text-center shadow-sm">
             <Camera size={34} className="text-[#1167b1]" />
-            <h3 className="mt-5 font-display text-3xl font-semibold">From design direction to delivered experience.</h3>
+            <h3 className="mt-5 font-display text-3xl font-semibold">From Design Direction to Delivered Experience.</h3>
             <p className="mt-3 max-w-xl leading-7 text-slate-600">
               Trident works with each project&apos;s architecture, traffic needs and operational goals to shape the right cabin and elevator configuration.
             </p>

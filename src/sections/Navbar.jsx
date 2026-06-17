@@ -59,7 +59,7 @@ const Navbar = ({ onQuoteClick }) => {
           </div>
 
           <div className="flex items-center gap-2">
-            <button type="button" onClick={onQuoteClick} className="hidden rounded-full bg-[#07111f] px-6 py-3 text-xs font-extrabold uppercase tracking-[0.12em] text-white transition hover:bg-[#1167b1] sm:block">
+            <button type="button" onClick={onQuoteClick} className="hidden rounded-full bg-[#07111f] px-6 py-3 text-xs font-extrabold text-white transition hover:bg-[#1167b1] sm:block">
               Get a quote
             </button>
             <button

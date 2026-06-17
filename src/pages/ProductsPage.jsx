@@ -8,7 +8,7 @@ const ProductsPage = ({ onQuoteClick }) => (
   <>
     <PageHero
       eyebrow="Elevator Portfolio"
-      title="A solution for every kind of movement."
+      title="A Solution for Every Kind of Movement."
       description="From private homes to demanding industrial environments, each elevator is considered as a response to a specific building and use case."
       image={heroImage}
     />
@@ -18,7 +18,7 @@ const ProductsPage = ({ onQuoteClick }) => (
         <div className="max-w-3xl">
           <p className="overline">Our products</p>
           <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
-            Select the application. We will help shape the right configuration.
+            Select the Application. We Will Help Shape the Right Configuration.
           </h2>
         </div>
 

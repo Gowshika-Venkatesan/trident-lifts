@@ -8,7 +8,7 @@ const ContactPage = () => (
   <>
     <PageHero
       eyebrow="Contact Trident"
-      title="Bring us into the conversation."
+      title="Bring Us into the Conversation."
       description="Whether you are planning a new building, upgrading an existing elevator or looking for service support, begin with the details you already have."
       image={heroImage}
     />
@@ -17,7 +17,7 @@ const ContactPage = () => (
       <div className="mx-auto grid max-w-[1312px] gap-10 lg:grid-cols-[.75fr_1.25fr]">
         <div>
           <p className="overline">Get in touch</p>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight sm:text-5xl">A useful first conversation starts with context.</h2>
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight sm:text-5xl">A Useful First Conversation Starts with Context.</h2>
           <p className="mt-6 max-w-lg text-lg leading-8 text-slate-600">
             Share your building type, number of floors, location, project stage and the kind of support you are looking for.
           </p>
@@ -31,7 +31,7 @@ const ContactPage = () => (
               <a key={label} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noreferrer' : undefined} className="flex gap-4 rounded-2xl bg-white p-5 transition hover:-translate-y-0.5 hover:shadow-lg">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-[#1167b1]">{icon}</span>
                 <div>
-                  <p className="text-xs font-black uppercase tracking-[0.15em] text-slate-400">{label}</p>
+                  <p className="text-xs font-black text-slate-400">{label}</p>
                   <p className="mt-1 font-semibold text-slate-700">{value}</p>
                 </div>
               </a>
@@ -49,7 +49,7 @@ const ContactPage = () => (
       <div className="mx-auto max-w-[1312px]">
         <div className="max-w-3xl">
           <p className="overline">Visit Trident</p>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight sm:text-6xl">Two locations. One committed team.</h2>
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight sm:text-6xl">Two Locations. One Committed Team.</h2>
         </div>
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
           {[

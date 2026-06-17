@@ -124,7 +124,7 @@ const EnquiryForm = ({ onSuccess }) => {
         {error && <p className="rounded-xl bg-amber-50 p-4 text-sm font-semibold leading-6 text-amber-800 sm:col-span-2">{error}</p>}
 
         <div className="sm:col-span-2">
-          <button type="submit" disabled={status === 'loading'} className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 py-4 text-sm font-extrabold uppercase tracking-wider text-white transition hover:bg-slate-950 disabled:cursor-wait disabled:opacity-70">
+          <button type="submit" disabled={status === 'loading'} className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 py-4 text-sm font-extrabold text-white transition hover:bg-slate-950 disabled:cursor-wait disabled:opacity-70">
             {status === 'loading' && <LoaderCircle size={18} className="animate-spin" />}
             Send project request
           </button>

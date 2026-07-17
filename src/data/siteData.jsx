@@ -14,7 +14,7 @@ import passengerImg from '../assets/premium_lift.png';
 import homeImg from '../assets/home_lift.png';
 import hospitalImg from '../assets/hospital_lift.png';
 import freightImg from '../assets/goods_lift.png';
-import observationImg from '../assets/Lux.png';
+import observationImg from '../assets/observation-glass-lift.png';
 import commercialImg from '../assets/It.png';
 import warehouseImg from '../assets/ware.png';
 import hospitalityImg from '../assets/hotel.png';
@@ -141,7 +141,7 @@ export const galleryItems = [
   { id: 2, category: 'Commercial', title: 'Azure Line', subtitle: 'Stone, stainless steel and cool architectural light', image: gallerySteel, concept: true },
   { id: 3, category: 'Residential', title: 'Walnut Residence', subtitle: 'Warm timber, satin brass and soft ambient lighting', image: galleryWalnut, concept: true },
   { id: 4, category: 'Hospitality', title: 'Panoramic Halo', subtitle: 'Curved glass, twilight views and a luminous ceiling', image: galleryPanoramic, concept: true },
-  { id: 5, category: 'Residential', title: 'Private Residence', subtitle: 'Refined vertical mobility for contemporary homes', image: observationImg },
+  { id: 5, category: 'Commercial', title: 'Glass Observation Lift', subtitle: 'Transparent shaft, black steel structure and panoramic movement', image: observationImg },
   { id: 6, category: 'Commercial', title: 'Executive Tower', subtitle: 'A polished arrival experience for the workplace', image: commercialImg },
   { id: 7, category: 'Industrial', title: 'Heavy-Duty Freight', subtitle: 'Practical movement engineered around demanding loads', image: industrialImg },
   { id: 8, category: 'Hospitality', title: 'Grand Lobby', subtitle: 'A welcoming passenger elevator for premium spaces', image: hospitalityImg },

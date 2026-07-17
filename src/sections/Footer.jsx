@@ -25,6 +25,7 @@ const Footer = ({ onQuoteClick }) => (
             <Link to="/gallery" className="hover:text-white">Gallery</Link>
             <Link to="/clients" className="hover:text-white">Our clients</Link>
             <Link to="/faq" className="hover:text-white">FAQ</Link>
+            <Link to="/why-choose-us" className="hover:text-white">Why choose us</Link>
             <Link to="/contact" className="hover:text-white">Contact</Link>
           </div>
         </div>

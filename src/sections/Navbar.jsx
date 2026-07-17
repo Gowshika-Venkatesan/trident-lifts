@@ -11,6 +11,7 @@ const navLinks = [
   { label: 'Gallery', to: '/gallery' },
   { label: 'Clients', to: '/clients' },
   { label: 'FAQ', to: '/faq' },
+  { label: 'Why Choose Us', to: '/why-choose-us' },
   { label: 'Contact', to: '/contact' },
 ];
 
@@ -39,7 +40,7 @@ const Navbar = ({ onQuoteClick }) => {
             <img src={logo} alt="Trident Elevating Solutions" className="h-11 w-auto object-contain sm:h-12" />
           </Link>
 
-          <div className="hidden items-center gap-6 xl:flex">
+          <div className="hidden items-center gap-4 xl:flex">
             {navLinks.map((link) => (
               <NavLink
                 key={link.to}

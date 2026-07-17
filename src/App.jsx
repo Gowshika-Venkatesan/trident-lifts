@@ -11,6 +11,7 @@ import ProductsPage from './pages/ProductsPage';
 import ServicesPage from './pages/ServicesPage';
 import GalleryPage from './pages/GalleryPage';
 import FaqPage from './pages/FaqPage';
+import WhyChooseUsPage from './pages/WhyChooseUsPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
 import AdminPage from './pages/AdminPage';
@@ -29,6 +30,7 @@ function ScrollToTop() {
       '/gallery': 'Project Gallery | Trident Elevating Solutions',
       '/clients': 'Our Clients | Trident Elevating Solutions',
       '/faq': 'Elevator Planning FAQ | Trident Elevating Solutions',
+      '/why-choose-us': 'Why Choose Us | Trident Elevating Solutions',
       '/contact': 'Contact Us | Trident Elevating Solutions',
     };
     document.title = pageTitles[pathname] || 'Trident Elevating Solutions';
@@ -64,6 +66,7 @@ function App() {
           <Route path="/gallery" element={<GalleryPage onQuoteClick={openQuote} />} />
           <Route path="/clients" element={<ClientsPage onQuoteClick={openQuote} />} />
           <Route path="/faq" element={<FaqPage onQuoteClick={openQuote} />} />
+          <Route path="/why-choose-us" element={<WhyChooseUsPage onQuoteClick={openQuote} />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<NotFoundPage />} />

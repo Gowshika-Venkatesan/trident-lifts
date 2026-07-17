@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 import PageHero from '../components/PageHero';
 import CallToAction from '../components/CallToAction';
 import heroImage from '../assets/hotel.png';
-import detailImage from '../assets/premium_lift.png';
 
 const directors = [
   {
@@ -168,28 +167,32 @@ const AboutPage = ({ onQuoteClick }) => (
     </section>
 
     <section className="px-6 py-24 sm:px-10 lg:px-16 lg:py-32">
-      <div className="mx-auto grid max-w-[1312px] gap-10 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
-        <img src={detailImage} alt="Premium elevator cabin detail" className="min-h-[600px] w-full rounded-[2.5rem] object-cover" />
-        <div className="lg:pl-10">
-          <p className="overline">Our approach</p>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight sm:text-5xl">Listen. Study. Engineer. Deliver. Care.</h2>
-          <div className="mt-8 space-y-6">
+      <div className="mx-auto max-w-[1312px] rounded-[2.5rem] bg-[#07111f] p-8 text-white sm:p-12 lg:p-16">
+        <div className="grid gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-start">
+          <div>
+            <p className="overline text-cyan-300">Our approach</p>
+            <h2 className="mt-5 font-display text-4xl font-semibold leading-tight sm:text-5xl">Listen. Study. Engineer. Deliver. Care.</h2>
+            <p className="mt-6 text-lg leading-8 text-slate-300">
+              Trident works through a clear decision path so every elevator recommendation is connected to the building, the people using it and the team maintaining it.
+            </p>
+            <Link to="/contact" className="mt-9 inline-flex items-center gap-2 font-extrabold text-cyan-300 hover:text-white">
+              Talk to our team <ArrowUpRight size={18} />
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
             {[
-              ['01', 'Understand the application'],
-              ['02', 'Assess the site and constraints'],
-              ['03', 'Shape the technical and design proposal'],
-              ['04', 'Coordinate installation and handover'],
-              ['05', 'Support the equipment lifecycle'],
-            ].map(([number, label]) => (
-              <div key={number} className="flex items-center gap-5 border-b border-slate-200 pb-5">
-                <span className="text-xs font-black tracking-widest text-[#1167b1]">{number}</span>
-                <p className="font-display text-xl font-semibold">{label}</p>
-              </div>
+              ['Understand', 'We begin with the application, users, capacity and movement pattern.'],
+              ['Assess', 'Site conditions, shaft space, access and execution constraints are reviewed early.'],
+              ['Shape', 'The technical configuration and design direction are aligned before proposal.'],
+              ['Coordinate', 'Installation requirements, finishes and handover expectations are planned clearly.'],
+              ['Support', 'Maintenance and future modernization needs remain part of the relationship.'],
+            ].map(([title, text]) => (
+              <article key={title} className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <h3 className="font-display text-2xl font-semibold">{title}</h3>
+                <p className="mt-3 leading-7 text-slate-300">{text}</p>
+              </article>
             ))}
           </div>
-          <Link to="/contact" className="link-arrow mt-9">
-            Talk to our team <ArrowUpRight size={18} />
-          </Link>
         </div>
       </div>
     </section>

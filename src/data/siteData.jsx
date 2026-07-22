@@ -16,7 +16,7 @@ import hospitalImg from '../assets/hospital_lift.png';
 import freightImg from '../assets/goods_lift.png';
 import observationImg from '../assets/observation-glass-lift.png';
 import commercialImg from '../assets/It.png';
-import accessibilityImg from '../assets/accessibility-wheelchair-lift.jpg';
+import accessibilityImg from '../assets/accessibility-wheelchair-lift.png';
 import warehouseImg from '../assets/ware.png';
 import hospitalityImg from '../assets/hotel.png';
 import industrialImg from '../assets/frigh.png';

@@ -40,7 +40,7 @@ const directors = [
   },
   {
     name: 'Vikram',
-    role: 'Founder & Director',
+    role: 'Managing Partner',
     intro: 'Mechanical engineer with hands-on expertise across elevator installation, engineering and manufacturing support.',
     highlights: [
       'B.Tech in Mechanical Engineering from a recognized university in Karnataka.',

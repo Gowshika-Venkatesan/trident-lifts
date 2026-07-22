@@ -16,6 +16,7 @@ import hospitalImg from '../assets/hospital_lift.png';
 import freightImg from '../assets/goods_lift.png';
 import observationImg from '../assets/observation-glass-lift.png';
 import commercialImg from '../assets/It.png';
+import accessibilityImg from '../assets/accessibility-wheelchair-lift.svg';
 import warehouseImg from '../assets/ware.png';
 import hospitalityImg from '../assets/hotel.png';
 import industrialImg from '../assets/frigh.png';
@@ -97,7 +98,7 @@ export const products = [
     description: 'Practical mobility for elderly users, wheelchair users and inclusive environments.',
     detail: 'A site assessment determines the most appropriate platform or elevator configuration.',
     icon: <Accessibility size={24} />,
-    image: commercialImg,
+    image: accessibilityImg,
   },
 ];
 

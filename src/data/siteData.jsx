@@ -24,11 +24,9 @@ import galleryGold from '../assets/gallery-gold-luxe.png';
 import gallerySteel from '../assets/gallery-cool-steel.png';
 import galleryWalnut from '../assets/gallery-walnut-villa.png';
 import galleryPanoramic from '../assets/gallery-panoramic.png';
-import a2bLogo from '../assets/a2b.png';
-import juniorLogo from '../assets/Junior.jpg';
-import joyLogo from '../assets/Joy.png';
-import zudioLogo from '../assets/zudio.png';
-import thalappakattiLogo from '../assets/thala.jpg';
+import rSteelsLogo from '../assets/client-logos/r-steels-cements.png';
+import isaivaniLogo from '../assets/client-logos/isaivani-constructions.png';
+import urbanVibesLogo from '../assets/client-logos/urban-vibes-mall.png';
 
 export const businessDetails = {
   website: 'www.tridentelevatingsolutions.com',
@@ -41,7 +39,7 @@ export const businessDetails = {
   ],
   whatsapp: '+91 99163 69998',
   whatsappHref: '919916369998',
-  factoryAddress: 'No. 347, Rajarajeshwari Layout, Begur-Koppa Road, Mylasandra Dinne, Bengaluru - 560068',
+  factoryAddress: 'Trident Elevating Solutions, Begur - Koppa Rd, Mylsandra Dinne, Bettadasanapura, Bengaluru, Mylasandra, Karnataka 560068',
   branchAddress: 'Urban Vibes Mall, 20th Main Road, near Maruthi Nagar Main Road, Chikka Madivala, BTM 1st Stage, Bengaluru - 560029',
 };
 
@@ -130,11 +128,9 @@ export const services = [
 ];
 
 export const clients = [
-  { id: 1, name: 'A2B - Adyar Ananda Bhavan', sector: 'Hospitality', logo: a2bLogo },
-  { id: 2, name: 'Junior Kuppanna', sector: 'Hospitality', logo: juniorLogo },
-  { id: 3, name: 'Joyalukkas', sector: 'Retail', logo: joyLogo },
-  { id: 4, name: 'Zudio', sector: 'Retail', logo: zudioLogo },
-  { id: 5, name: 'Dindigul Thalappakatti', sector: 'Hospitality', logo: thalappakattiLogo },
+  { id: 1, name: 'R Steels and Cements', sector: 'Building Materials', logo: rSteelsLogo },
+  { id: 2, name: 'Isaivani Constructions', sector: 'Construction', logo: isaivaniLogo },
+  { id: 3, name: 'Urban Vibes Mall (BTM Layout)', sector: 'Retail', logo: urbanVibesLogo },
 ];
 
 export const galleryItems = [

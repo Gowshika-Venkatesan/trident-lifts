@@ -86,9 +86,6 @@ const ClientsPage = ({ onQuoteClick }) => (
           </article>
         </div>
 
-        <p className="mt-7 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-6 text-amber-900">
-          Demo note: these brand names and logos are sample references. Confirm the commercial relationship and obtain brand-use approval before presenting them publicly as Trident clients.
-        </p>
       </div>
     </section>
 

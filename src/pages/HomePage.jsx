@@ -112,7 +112,7 @@ const HomePage = ({ onQuoteClick }) => (
           </Link>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
+        <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {clients.map((client) => (
             <article
               key={client.id}
@@ -128,9 +128,6 @@ const HomePage = ({ onQuoteClick }) => (
             </article>
           ))}
         </div>
-        <p className="mt-6 text-xs leading-5 text-slate-500">
-          Client names and logos are included as a demonstration showcase and should be published after relationship and brand-use approval.
-        </p>
       </div>
     </section>
 

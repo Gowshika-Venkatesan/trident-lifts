@@ -53,12 +53,12 @@ const ContactPage = () => (
         </div>
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
           {[
-            [<Building2 size={27} />, 'Factory', businessDetails.factoryAddress],
-            [<MapPin size={27} />, 'Branch office', businessDetails.branchAddress],
-          ].map(([icon, title, address]) => (
+            [<Building2 size={27} />, 'Factory', businessDetails.factoryAddress, businessDetails.factoryMapQuery],
+            [<MapPin size={27} />, 'Branch office', businessDetails.branchAddress, businessDetails.branchAddress],
+          ].map(([icon, title, address, mapQuery]) => (
             <a
               key={title}
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`}
               target="_blank"
               rel="noreferrer"
               className="group rounded-[2rem] bg-[#f4f6f8] p-8 transition hover:bg-[#e6f3f8] sm:p-10"

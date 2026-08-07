@@ -39,7 +39,8 @@ export const businessDetails = {
   ],
   whatsapp: '+91 99163 69998',
   whatsappHref: '919916369998',
-  factoryAddress: 'Trident Elevating Solutions, Begur - Koppa Rd, Mylsandra Dinne, Bettadasanapura, Bengaluru, Mylasandra, Karnataka 560068',
+  factoryAddress: 'No. 347, Rajarajeshwari Layout, Begur-Koppa Road, Mylasandra Dinne, Bangalore - 560068.',
+  factoryMapQuery: 'Trident Elevating Solutions, Begur - Koppa Rd, Mylsandra Dinne, Bettadasanapura, Bengaluru, Mylasandra, Karnataka 560068',
   branchAddress: 'Urban Vibes Mall, 20th Main Road, near Maruthi Nagar Main Road, Chikka Madivala, BTM 1st Stage, Bengaluru - 560029',
 };
 

@@ -37,14 +37,14 @@ Use the public anonymous key. Never expose the Supabase service-role key in this
 - Daily attendance dropdown with Present, Leave, Half Day, Absent and Holiday
 - Monthly day-by-day attendance register and status totals
 - Salary advance entry and history
-- Monthly salary less approved advances
+- Monthly salary less unpaid leave, absences, half days and approved advances dated within that month
 - Mobile-responsive dashboard
 
 ## 5. Before using payroll operationally
 
 The current payroll page is an overview. Define and implement:
 
-- Paid and unpaid leave rules
+- Additional paid-leave allowances, if the company introduces them later
 - Overtime
 - Late arrival and half-day rules
 - Bonuses and reimbursements

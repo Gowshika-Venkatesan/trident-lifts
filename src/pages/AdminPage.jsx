@@ -55,6 +55,7 @@ const attendanceStatuses = [
 ];
 
 const attendanceMeta = Object.fromEntries(attendanceStatuses.map((status) => [status.value, status]));
+const recordMonth = (date) => String(date || '').slice(0, 7);
 
 const getMonthDays = (month) => {
   const [year, monthNumber] = month.split('-').map(Number);
@@ -255,16 +256,19 @@ function AdminPage() {
     return activeEmployees.map((employee) => {
       const baseSalary = Number(employee.monthly_salary || 0);
       const approvedAdvance = advances
-        .filter((advance) => advance.employee_id === employee.id && advance.status === 'approved' && advance.advance_date.startsWith(payrollMonth))
+        .filter((advance) => String(advance.employee_id) === String(employee.id)
+          && String(advance.status).toLowerCase() === 'approved'
+          && recordMonth(advance.advance_date) === payrollMonth)
         .reduce((sum, advance) => sum + Number(advance.amount), 0);
-      const employeeAttendance = attendance.filter((entry) => entry.employee_id === employee.id && entry.attendance_date.startsWith(payrollMonth));
+      const employeeAttendance = attendance.filter((entry) => String(entry.employee_id) === String(employee.id)
+        && recordMonth(entry.attendance_date) === payrollMonth);
       const presentDays = employeeAttendance.filter((entry) => entry.status === 'present').length;
       const leaveDays = employeeAttendance.filter((entry) => entry.status === 'leave').length;
       const halfDays = employeeAttendance.filter((entry) => entry.status === 'half_day').length;
       const absentDays = employeeAttendance.filter((entry) => entry.status === 'absent').length;
       const holidayDays = employeeAttendance.filter((entry) => entry.status === 'holiday').length;
       const dailyRate = daysInPayrollMonth ? baseSalary / daysInPayrollMonth : 0;
-      const attendanceDeduction = dailyRate * (absentDays + halfDays * 0.5);
+      const attendanceDeduction = dailyRate * (leaveDays + absentDays + halfDays * 0.5);
       const grossAfterAttendance = Math.max(baseSalary - attendanceDeduction, 0);
       return {
         ...employee,
@@ -362,6 +366,7 @@ function AdminPage() {
       setError(advanceError.message);
       return;
     }
+    setPayrollMonth(recordMonth(advanceForm.advance_date));
     setAdvanceForm({ employee_id: '', amount: '', advance_date: today, reason: '' });
     loadData();
   };
@@ -631,8 +636,9 @@ function AdminPage() {
             <input type="month" value={payrollMonth} onChange={(event) => setPayrollMonth(event.target.value)} className="rounded-xl border border-slate-200 px-4 py-3 font-bold outline-none focus:border-[#1167b1]" />
           </div>
 
-          <div className="mt-6 grid gap-4 rounded-2xl bg-[#07111f] p-5 text-white sm:grid-cols-3">
+          <div className="mt-6 grid gap-4 rounded-2xl bg-[#07111f] p-5 text-white sm:grid-cols-4">
             <div><p className="text-xs font-black uppercase tracking-wider text-slate-400">Salary basis</p><p className="mt-2 text-lg font-black">{getMonthDays(payrollMonth).length} calendar days</p></div>
+            <div><p className="text-xs font-black uppercase tracking-wider text-slate-400">Leave deduction</p><p className="mt-2 text-lg font-black">1 full daily rate</p></div>
             <div><p className="text-xs font-black uppercase tracking-wider text-slate-400">Absent deduction</p><p className="mt-2 text-lg font-black">1 full daily rate</p></div>
             <div><p className="text-xs font-black uppercase tracking-wider text-slate-400">Half-day deduction</p><p className="mt-2 text-lg font-black">50% of daily rate</p></div>
           </div>
@@ -685,6 +691,7 @@ function AdminPage() {
                 <div className="mt-5 space-y-3 text-sm">
                   <div className="flex justify-between"><span className="text-slate-500">Base monthly salary</span><strong>{money(row.baseSalary)}</strong></div>
                   <div className="flex justify-between"><span className="text-slate-500">Daily rate ({row.daysInPayrollMonth} days)</span><strong>{money(row.dailyRate)}</strong></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Leave: {row.leaveDays} day(s)</span><strong className="text-red-600">-{money(row.dailyRate * row.leaveDays)}</strong></div>
                   <div className="flex justify-between"><span className="text-slate-500">Absent: {row.absentDays} day(s)</span><strong className="text-red-600">-{money(row.dailyRate * row.absentDays)}</strong></div>
                   <div className="flex justify-between"><span className="text-slate-500">Half day: {row.halfDays}</span><strong className="text-red-600">-{money(row.dailyRate * row.halfDays * 0.5)}</strong></div>
                   <div className="flex justify-between"><span className="text-slate-500">Salary after attendance</span><strong>{money(row.grossAfterAttendance)}</strong></div>
@@ -698,7 +705,7 @@ function AdminPage() {
 
         <div className="flex gap-3 rounded-xl bg-amber-50 p-4 text-sm leading-6 text-amber-800">
           <CircleAlert size={20} className="mt-0.5 shrink-0" />
-          <p>Current rule: Present, Leave and Holiday are paid. Absent deducts one calendar-day rate and Half Day deducts half a rate. Unmarked dates do not deduct salary. Confirm this company policy before final payroll use; PF, ESI, tax, overtime and other statutory items are not yet included.</p>
+          <p>Current rule: Leave and Absent each deduct one calendar-day rate, Half Day deducts half a rate, and approved salary advances dated within the selected payroll month are deducted in full. Present and Holiday are paid. Unmarked dates do not deduct salary; PF, ESI, tax, overtime and other statutory items are not yet included.</p>
         </div>
       </div>
     );
